@@ -4,10 +4,17 @@
 #include "Player/EtheriPlayerController.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "Interface/EnemyInterface.h"
 
 AEtheriPlayerController::AEtheriPlayerController()
 {
 	bReplicates = true;
+}
+
+void AEtheriPlayerController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	CursorTrace();
 }
 
 void AEtheriPlayerController::BeginPlay()
@@ -53,5 +60,27 @@ void AEtheriPlayerController::Move(const FInputActionValue& InputActionValue)
 		//forward direction here represents the W and S keys which are used by the player to move along the Y axis
 		controlledPawn->AddMovementInput(forwardDirection, inputAxisVector.Y);
 		controlledPawn->AddMovementInput(rightDirection, inputAxisVector.X);
+	}
+}
+
+void AEtheriPlayerController::CursorTrace()
+{
+	FHitResult cursorHit;
+	GetHitResultUnderCursor(ECC_Visibility, false, cursorHit);
+	if (!cursorHit.bBlockingHit) return;
+
+	LastActor = ThisActor;
+	ThisActor = cursorHit.GetActor();
+	if (ThisActor != LastActor)
+	{
+		if (LastActor != nullptr)
+		{
+			LastActor->UnHighlightActor();
+		}
+
+		if (ThisActor != nullptr)
+		{
+			ThisActor->HighlightActor();
+		}
 	}
 }

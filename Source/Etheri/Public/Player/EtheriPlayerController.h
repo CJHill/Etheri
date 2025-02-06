@@ -9,6 +9,7 @@
 class UInputMappingContext; //Declaration so that this class can be wrapped in a TObjectPtr. Variables of this type will be marked as such VariableName_IMC
 class UInputAction; //Declaration so that this class can be wrapped in a TObjectPtr. Variables of this type will be marked as such VariableName_IA
 struct FInputActionValue;
+class IEnemyInterface;
 
 UCLASS()
 class ETHERI_API AEtheriPlayerController : public APlayerController
@@ -16,7 +17,7 @@ class ETHERI_API AEtheriPlayerController : public APlayerController
 	GENERATED_BODY()
 public:
 	AEtheriPlayerController();
-
+	virtual void Tick(float DeltaTime) override;
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
@@ -29,4 +30,22 @@ private:
 	TObjectPtr<UInputAction> EtheriMovement_IA;
 
 	void Move(const FInputActionValue& InputActionValue);
+
+	/**Cursor Trace:
+	 * Line trace from cursor. There are several conditions:
+	 *  A. LastActor is null && ThisActor is null
+	 *		- Do nothing
+	 *	B. LastActor is null && ThisActor is valid
+	 *		- Highlight ThisActor
+	 *	C. LastActor is valid && ThisActor is null
+	 *		- UnHighlight LastActor
+	 *	D. Both actors are valid, but LastActor != ThisActor
+	 *		- UnHighlight LastActor, and Highlight ThisActor
+	 *	E. Both actors are valid, and are the same actor
+	 *		- Do nothing
+	 */
+	void CursorTrace();
+
+	TScriptInterface<IEnemyInterface> LastActor;
+	TScriptInterface<IEnemyInterface> ThisActor;
 };
