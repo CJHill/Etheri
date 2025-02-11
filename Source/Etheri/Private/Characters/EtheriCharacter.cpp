@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
+
 AEtheriCharacter::AEtheriCharacter()
 {
 	EtheriSpringArm = CreateDefaultSubobject<USpringArmComponent>("Player SpringArm");
@@ -28,4 +29,7 @@ AEtheriCharacter::AEtheriCharacter()
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
+
+	
+	
 }

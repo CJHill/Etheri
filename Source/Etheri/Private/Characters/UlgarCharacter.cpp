@@ -2,13 +2,18 @@
 
 
 #include "Characters/UlgarCharacter.h"
-#include "DrawDebugHelpers.h"
 #include "Etheri/Etheri.h"
+#include "GAS/EtheriAbilitySystemComponent.h"
+#include "GAS/EtheriAttributeSet.h"
 
 AUlgarCharacter::AUlgarCharacter()
 {
 	
 	GetMesh()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
+
+	AbilitySystemComponent = CreateDefaultSubobject<UEtheriAbilitySystemComponent>("Ability System Component");
+	AbilitySystemComponent->SetIsReplicated(true);
+	AttributeSet = CreateDefaultSubobject<UEtheriAttributeSet>("Attribute Set");
 }
 
 void AUlgarCharacter::HighlightActor()

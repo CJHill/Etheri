@@ -13,6 +13,16 @@ ACharacterBase::ACharacterBase()
 	WeaponMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
+UAbilitySystemComponent* ACharacterBase::GetAbilitySystemComponent() const
+{
+	return AbilitySystemComponent;
+}
+
+UAttributeSet* ACharacterBase::GetAttributeSet() const
+{
+	return AttributeSet;
+}
+
 // Called when the game starts or when spawned
 void ACharacterBase::BeginPlay()
 {
