@@ -5,7 +5,9 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-
+#include "Player/EtheriPlayerState.h"
+#include "GAS/EtheriAbilitySystemComponent.h"
+#include "GAS/EtheriAttributeSet.h"
 
 AEtheriCharacter::AEtheriCharacter()
 {
@@ -30,6 +32,16 @@ AEtheriCharacter::AEtheriCharacter()
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
 
+	/*AbilitySystemComponent = EtheriPlayerState->GetAbilitySystemComponent();
+	AttributeSet = EtheriPlayerState->GetAttributeSet();*/
 	
-	
+}
+
+void AEtheriCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+	if (HasAuthority())
+	{
+		AbilitySystemComponent->InitAbilityActorInfo(EtheriPlayerState, this);
+	}
 }

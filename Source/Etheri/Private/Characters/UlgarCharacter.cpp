@@ -13,8 +13,16 @@ AUlgarCharacter::AUlgarCharacter()
 
 	AbilitySystemComponent = CreateDefaultSubobject<UEtheriAbilitySystemComponent>("Ability System Component");
 	AbilitySystemComponent->SetIsReplicated(true);
+	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 	AttributeSet = CreateDefaultSubobject<UEtheriAttributeSet>("Attribute Set");
 }
+
+void AUlgarCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+}
+
 
 void AUlgarCharacter::HighlightActor()
 {
@@ -35,3 +43,5 @@ void AUlgarCharacter::UnHighlightActor()
 	GetMesh()->SetRenderCustomDepth(false);
 	WeaponMesh->SetRenderCustomDepth(false);
 }
+
+

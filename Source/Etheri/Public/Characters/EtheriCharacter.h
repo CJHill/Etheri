@@ -19,8 +19,11 @@ class ETHERI_API AEtheriCharacter : public ACharacterBase
 public:
 	AEtheriCharacter();
 protected:
-
+	virtual void PossessedBy(AController* NewController) override;
 private:
+
+	UPROPERTY()
+	class AEtheriPlayerState* EtheriPlayerState;
 
 	UPROPERTY(EditAnywhere, Category = "Display")
 	TObjectPtr<UCameraComponent> EtheriCamera;

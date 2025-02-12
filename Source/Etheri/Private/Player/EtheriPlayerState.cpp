@@ -11,6 +11,7 @@ AEtheriPlayerState::AEtheriPlayerState()
 
 	AbilitySystemComponent = CreateDefaultSubobject<UEtheriAbilitySystemComponent>("Ability System Component");
 	AbilitySystemComponent->SetIsReplicated(true);
+	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 	AttributeSet = CreateDefaultSubobject<UEtheriAttributeSet>("Attribute Set");
 }
 
