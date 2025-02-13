@@ -17,8 +17,12 @@ class ETHERI_API AUlgarCharacter : public ACharacterBase, public IEnemyInterface
 public:
 	AUlgarCharacter();
 
+	//Enemy Interface Functions
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
+	//End of Enemy Interface Functions
+
+
 protected:
 	virtual void BeginPlay() override;
 	

@@ -6,8 +6,8 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Player/EtheriPlayerState.h"
-#include "GAS/EtheriAbilitySystemComponent.h"
-#include "GAS/EtheriAttributeSet.h"
+#include "AbilitySystemComponent.h"
+
 
 AEtheriCharacter::AEtheriCharacter()
 {
@@ -32,16 +32,30 @@ AEtheriCharacter::AEtheriCharacter()
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
 
-	/*AbilitySystemComponent = EtheriPlayerState->GetAbilitySystemComponent();
-	AttributeSet = EtheriPlayerState->GetAttributeSet();*/
+	
 	
 }
 
 void AEtheriCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
-	if (HasAuthority())
+	//Don't need authority check as possessed by is only called on the server
+	InitAbilityActorInfo();
+	
+}
+
+void AEtheriCharacter::OnRep_PlayerState()
+{
+	InitAbilityActorInfo();
+}
+
+void AEtheriCharacter::InitAbilityActorInfo()
+{
+	AEtheriPlayerState* etheriPlayerState = GetPlayerState<AEtheriPlayerState>();
+	if (etheriPlayerState)
 	{
-		AbilitySystemComponent->InitAbilityActorInfo(EtheriPlayerState, this);
+		etheriPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(etheriPlayerState, this);
+		AbilitySystemComponent = etheriPlayerState->GetAbilitySystemComponent();
+		AttributeSet = etheriPlayerState->GetAttributeSet();
 	}
 }

@@ -20,10 +20,11 @@ public:
 	AEtheriCharacter();
 protected:
 	virtual void PossessedBy(AController* NewController) override;
+	virtual void OnRep_PlayerState() override;
 private:
+	void InitAbilityActorInfo();
 
-	UPROPERTY()
-	class AEtheriPlayerState* EtheriPlayerState;
+
 
 	UPROPERTY(EditAnywhere, Category = "Display")
 	TObjectPtr<UCameraComponent> EtheriCamera;

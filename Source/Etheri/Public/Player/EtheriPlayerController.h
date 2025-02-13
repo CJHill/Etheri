@@ -43,7 +43,7 @@ private:
 	 *		- UnHighlight LastActor, and Highlight ThisActor
 	 *	E. Both actors are valid, and are the same actor
 	 *		- Do nothing
-	 * Since case A and E both result in nothing happening. We don't need to check for these scenarios. If bugs do occur with this feature these cases will prove usefult for debugging
+	 * Since case A and E both result in nothing happening. We don't need to check for these scenarios. If bugs do occur with this feature these cases will prove useful for debugging
 	 */
 	void CursorTrace();
 

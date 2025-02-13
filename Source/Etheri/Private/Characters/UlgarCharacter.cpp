@@ -14,6 +14,7 @@ AUlgarCharacter::AUlgarCharacter()
 	AbilitySystemComponent = CreateDefaultSubobject<UEtheriAbilitySystemComponent>("Ability System Component");
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
+	
 	AttributeSet = CreateDefaultSubobject<UEtheriAttributeSet>("Attribute Set");
 }
 
