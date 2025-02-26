@@ -7,6 +7,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Player/EtheriPlayerState.h"
 #include "AbilitySystemComponent.h"
+#include "UI/HUD/EtheriHUD.h"
+#include "Player/EtheriPlayerController.h"
 
 
 AEtheriCharacter::AEtheriCharacter()
@@ -57,5 +59,12 @@ void AEtheriCharacter::InitAbilityActorInfo()
 		etheriPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(etheriPlayerState, this);
 		AbilitySystemComponent = etheriPlayerState->GetAbilitySystemComponent();
 		AttributeSet = etheriPlayerState->GetAttributeSet();
+	}
+	if (AEtheriPlayerController* etheriPlayerController = Cast<AEtheriPlayerController>(GetController()))
+	{
+		if (AEtheriHUD* etheriHUD = Cast<AEtheriHUD>(etheriPlayerController->GetHUD()))
+		{
+			etheriHUD->InitOverlay(etheriPlayerController, etheriPlayerState, AbilitySystemComponent, AttributeSet);
+		}
 	}
 }

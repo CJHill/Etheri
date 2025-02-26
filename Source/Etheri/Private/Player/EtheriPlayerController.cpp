@@ -23,7 +23,7 @@ void AEtheriPlayerController::BeginPlay()
 	check(Etheri_IMC);
 
 	UEnhancedInputLocalPlayerSubsystem* inputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
-	check(inputSubsystem);
+	if(!inputSubsystem) return;
 	inputSubsystem->AddMappingContext(Etheri_IMC, 0);
 
 	bShowMouseCursor = true;

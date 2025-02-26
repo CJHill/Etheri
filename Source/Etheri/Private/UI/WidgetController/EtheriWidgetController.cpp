@@ -3,3 +3,10 @@
 
 #include "UI/WidgetController/EtheriWidgetController.h"
 
+void UEtheriWidgetController::SetWidgetControllerParams(const FWidgetControllerParams& WidgetControllerParams)
+{
+	PlayerController = WidgetControllerParams.PlayerController;
+	PlayerState = WidgetControllerParams.PlayerState;
+	AbilitySystemComponent = WidgetControllerParams.AbilitySystemComponent;
+	AttributeSet = WidgetControllerParams.AttributeSet;
+}

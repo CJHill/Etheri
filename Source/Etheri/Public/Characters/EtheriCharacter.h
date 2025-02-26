@@ -8,6 +8,7 @@
 
 class UCameraComponent;
 class USpringArmComponent;
+class AEtheriHUD;
 /**
  * 
  */
@@ -24,7 +25,7 @@ protected:
 private:
 	void InitAbilityActorInfo();
 
-
+	
 
 	UPROPERTY(EditAnywhere, Category = "Display")
 	TObjectPtr<UCameraComponent> EtheriCamera;
