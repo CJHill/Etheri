@@ -37,13 +37,17 @@ struct FWidgetControllerParams
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType, Blueprintable)
 class ETHERI_API UEtheriWidgetController : public UObject
 {
 	GENERATED_BODY()
 public:
 	UFUNCTION(BlueprintCallable)
 	void SetWidgetControllerParams(const FWidgetControllerParams& WidgetControllerParams);
+
+	virtual void BroadcastInitialValues();
+
+	virtual void BindCallbacksToDependencies();
 protected:
 
 	UPROPERTY(BlueprintReadOnly, Category = "Widget Controller")

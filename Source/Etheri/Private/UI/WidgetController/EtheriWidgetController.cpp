@@ -10,3 +10,12 @@ void UEtheriWidgetController::SetWidgetControllerParams(const FWidgetControllerP
 	AbilitySystemComponent = WidgetControllerParams.AbilitySystemComponent;
 	AttributeSet = WidgetControllerParams.AttributeSet;
 }
+
+void UEtheriWidgetController::BroadcastInitialValues()
+{
+
+}
+
+void UEtheriWidgetController::BindCallbacksToDependencies()
+{
+}

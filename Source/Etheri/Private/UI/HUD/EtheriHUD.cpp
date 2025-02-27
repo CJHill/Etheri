@@ -19,6 +19,8 @@ void AEtheriHUD::InitOverlay(APlayerController* PController, APlayerState* PStat
 
 	OverlayWidget->SetWidgetController(overlayWidgetController);
 
+	overlayWidgetController->BroadcastInitialValues();
+	
 	widgetOverlay->AddToViewport();
 }
 
@@ -30,6 +32,7 @@ UOverlayWidgetController* AEtheriHUD::GetOverlayWidgetController(const FWidgetCo
 	{
 		OverlayWidgetController = NewObject<UOverlayWidgetController>(this, OverlayWidgetControllerClass);
 		OverlayWidgetController->SetWidgetControllerParams(WidgetControllerParams);
+		OverlayWidgetController->BindCallbacksToDependencies();
 		return OverlayWidgetController;
 	}
 	return OverlayWidgetController;

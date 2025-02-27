@@ -24,7 +24,7 @@ void AEtheriEffectActor::OnOverlap(UPrimitiveComponent* OverlappedComponent, AAc
 	{
 		const UEtheriAttributeSet* etheriAttributeSet = Cast<UEtheriAttributeSet>(abilitySystemInterface->GetAbilitySystemComponent()->GetAttributeSet(UEtheriAttributeSet::StaticClass()));
 		UEtheriAttributeSet* mutableEtheriAttributeSet = const_cast<UEtheriAttributeSet*>(etheriAttributeSet);
-		mutableEtheriAttributeSet->SetHealth(etheriAttributeSet->GetHealth() + 25.f);
+		mutableEtheriAttributeSet->SetMana(etheriAttributeSet->GetMana() + 25.f);
 		Destroy();
 	}
 }
