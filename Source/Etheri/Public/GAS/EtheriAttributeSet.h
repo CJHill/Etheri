@@ -13,6 +13,41 @@
  	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
  	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
+//The purpose of this struct is to encapsulate the source and target actors properties which are obtained from the Data parameter found in PostGameplayEffectExecute
+USTRUCT()
+struct FEffectProperties
+{
+	// Source = causer of the effect, Target = target of the effect 
+	GENERATED_BODY()
+
+	FEffectProperties(){}
+
+	FGameplayEffectContextHandle EffectContextHandle;
+
+	UPROPERTY()
+	ACharacter* SourceCharacter = nullptr;
+
+	UPROPERTY()
+	AActor* SourceActor = nullptr;
+
+	UPROPERTY()
+	AController* SourceController = nullptr;
+
+	UPROPERTY()
+	UAbilitySystemComponent* SourceAbilitySystemComponent =nullptr;
+
+	UPROPERTY()
+	ACharacter* TargetCharacter = nullptr;
+
+	UPROPERTY()
+	AActor* TargetActor = nullptr;
+
+	UPROPERTY()
+	AController* TargetController = nullptr;
+
+	UPROPERTY()
+	UAbilitySystemComponent* TargetAbilitySystemComponent = nullptr;
+};
 /*
 * 
 */
@@ -25,6 +60,9 @@ public:
 	UEtheriAttributeSet();
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
+	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
+
+	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
 
 	//Begin Health attribute properties---------------------------------------
 	UPROPERTY(ReplicatedUsing = OnRep_Health)
@@ -56,5 +94,7 @@ public:
 	void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const;
 	//End Mana attribute properties-------------------------------------------
 
+private:
+	void GetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Properties) const;
 
 };

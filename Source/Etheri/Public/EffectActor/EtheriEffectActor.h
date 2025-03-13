@@ -48,12 +48,7 @@ struct FAppliesGameplayEffect
 		return GEClass == Other.GEClass && ApplicationEffectPolicy == Other.ApplicationEffectPolicy && RemovalEffectPolicy == Other.RemovalEffectPolicy;
 	}
 
-	/*friend uint32 GetTypeHash(const FAppliesGameplayEffect& Effect)
-	{
-		return HashCombine(GetTypeHash(Effect.GEClass),
-			HashCombine(GetTypeHash(static_cast<uint8>(Effect.ApplicationEffectPolicy)),
-				GetTypeHash(static_cast<uint8>(Effect.RemovalEffectPolicy))));
-	}*/
+
 };
 
 struct FActiveEffectRemovalHandle
@@ -69,16 +64,7 @@ struct FActiveEffectRemovalHandle
 	{
 		return ActiveEffectHandle == Other.ActiveEffectHandle && ActiveEffect == Other.ActiveEffect;
 	}
-	/*friend bool operator==(const FActiveEffectRemovalHandle& A, const FActiveEffectRemovalHandle& B)
-	{
-		return A.ActiveEffect == B.ActiveEffect &&
-			A.ActiveEffectHandle == B.ActiveEffectHandle;
-	}
 
-	friend uint32 GetTypeHash(const FActiveEffectRemovalHandle& Handle)
-	{
-		return HashCombine(GetTypeHash(Handle.ActiveEffect), GetTypeHash(Handle.ActiveEffectHandle));
-	}*/
 };
 
 UCLASS()

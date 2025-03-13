@@ -2,7 +2,11 @@
 
 
 #include "GAS/EtheriAttributeSet.h"
+#include "AbilitySystemBlueprintLibrary.h"
+#include "GameFramework/Character.h"
 #include "Net/UnrealNetwork.h"
+#include "GameplayEffectExtension.h"
+
 
 UEtheriAttributeSet::UEtheriAttributeSet()
 {
@@ -20,6 +24,63 @@ void UEtheriAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, MaxHealth, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, Mana, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, MaxMana, COND_None, REPNOTIFY_Always);
+}
+
+void UEtheriAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
+{
+	Super::PreAttributeChange(Attribute, NewValue);
+	if (Attribute == GetHealthAttribute())
+	{
+		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxHealth());
+	}
+	if (Attribute == GetManaAttribute())
+	{
+		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxMana());
+	}
+}
+
+void UEtheriAttributeSet::GetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Properties) const
+{
+	Properties.EffectContextHandle = Data.EffectSpec.GetContext();
+	Properties.SourceAbilitySystemComponent = Properties.EffectContextHandle.GetInstigatorAbilitySystemComponent();
+
+	if (IsValid(Properties.SourceAbilitySystemComponent) 
+		&& Properties.SourceAbilitySystemComponent->AbilityActorInfo.IsValid() 
+		&& Properties.SourceAbilitySystemComponent->AbilityActorInfo->AvatarActor.IsValid())
+	{
+		Properties.SourceActor = Properties.SourceAbilitySystemComponent->AbilityActorInfo->AvatarActor.Get();
+		Properties.SourceController = Properties.SourceAbilitySystemComponent->AbilityActorInfo->PlayerController.Get();
+		if (Properties.SourceController && Properties.SourceActor != nullptr)
+		{
+			if (const APawn* Pawn = Cast<APawn>(Properties.SourceActor))
+			{
+				Properties.SourceController = Pawn->GetController();
+			}
+		}
+		if (Properties.SourceController)
+		{
+			Properties.SourceCharacter = Cast<ACharacter>(Properties.SourceController->GetPawn());
+		}
+
+		
+	}
+
+	if (Data.Target.AbilityActorInfo.IsValid() && Data.Target.AbilityActorInfo->AvatarActor.IsValid())
+	{
+		Properties.TargetActor = Data.Target.AbilityActorInfo->AvatarActor.Get();
+		Properties.TargetCharacter = Cast<ACharacter>(Properties.TargetActor);
+		Properties.TargetController = Data.Target.AbilityActorInfo->PlayerController.Get();
+		Properties.TargetAbilitySystemComponent = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(Properties.TargetActor);
+	}
+}
+
+void UEtheriAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
+{
+	Super::PostGameplayEffectExecute(Data);
+	
+	FEffectProperties Props;
+	GetEffectProperties(Data, Props);
+
 }
 
 void UEtheriAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) const
@@ -41,3 +102,5 @@ void UEtheriAttributeSet::OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, MaxMana, OldMaxMana);
 }
+
+
