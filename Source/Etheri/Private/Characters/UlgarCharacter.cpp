@@ -21,7 +21,14 @@ AUlgarCharacter::AUlgarCharacter()
 void AUlgarCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	InitAbilityActorInfo();
+}
+
+void AUlgarCharacter::InitAbilityActorInfo()
+{
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+	Cast<UEtheriAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
 }
 
 

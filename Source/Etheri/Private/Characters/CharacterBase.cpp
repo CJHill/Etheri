@@ -13,6 +13,10 @@ ACharacterBase::ACharacterBase()
 	WeaponMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
+void ACharacterBase::InitAbilityActorInfo()
+{
+}
+
 UAbilitySystemComponent* ACharacterBase::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;

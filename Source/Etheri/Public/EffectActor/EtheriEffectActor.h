@@ -11,6 +11,7 @@
 class UGameplayEffect;
 class UAbilitySystemComponent;
 
+//Different game objects might be applied differently so having on and on end overlap will provide versatility. 
 UENUM(BlueprintType)
 enum class EApplyEffectPolicy : uint8
 {
@@ -19,6 +20,7 @@ enum class EApplyEffectPolicy : uint8
 	AEP_DoNotApply UMETA(DisplayName = "Do Not Apply")
 };
 
+//Mainly needed for infinite gameplay effects as they must be removed manually.
 UENUM(BlueprintType)
 enum class EEffectRemovalPolicy:uint8
 {
@@ -26,12 +28,12 @@ enum class EEffectRemovalPolicy:uint8
 	ERP_DoNotRemove UMETA(DisplayName = "Do Not Remove")
 };
 
+//Encapsulates gameplay effects and their policy properties to make the assignment of gameplay effects much more convenient in the editor
 USTRUCT(BlueprintType)
 struct FAppliesGameplayEffect
 {
 	GENERATED_BODY()
 
-	
 	public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Gameplay Effects")
@@ -83,10 +85,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Gameplay Effects")
 	bool bDestroyOnEffectRemoval = false;
 
-	UFUNCTION(BlueprintCallable)
 	void ApplyGameplayEffectToActor(AActor* TargetActor, const FAppliesGameplayEffect& GameplayEffect);
-
-
 
 	UFUNCTION(BlueprintCallable)
 	void OnOverlap(AActor* TargetActor);
@@ -94,14 +93,15 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void OnEndOverlap(AActor* TargetActor);
 
-
-
+	//Allows a game object to apply multiple gameplay effects to a target
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Gameplay Effects")
 	TArray<FAppliesGameplayEffect> GameplayEffectsToApply;
 	
-	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveGameEffectHandles;
-
+	//Multi Map is used because a target can recieve multiple infinite effects
 	TMultiMap<UAbilitySystemComponent*, FActiveEffectRemovalHandle> ActiveGameEffects;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Gameplay Effects")
+	float ActorLevel = 1.f;
 private:
 	
 public:	

@@ -60,6 +60,7 @@ public:
 	UEtheriAttributeSet();
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
+	//Used for clamping current attribute values to the max attribute values
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
 
 	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
@@ -95,6 +96,7 @@ public:
 	//End Mana attribute properties-------------------------------------------
 
 private:
+	// Uses the Data variable passed in from PostGameplayEffectExecute to assign to the apropriate value in the FEffectProperties struct
 	void GetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Properties) const;
 
 };

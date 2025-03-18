@@ -41,15 +41,21 @@ void UEtheriAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute
 
 void UEtheriAttributeSet::GetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Properties) const
 {
+	
 	Properties.EffectContextHandle = Data.EffectSpec.GetContext();
 	Properties.SourceAbilitySystemComponent = Properties.EffectContextHandle.GetInstigatorAbilitySystemComponent();
 
+	/*
+	the reason for not using the negation operator (!) and returning early when checking the source ability system component is because the source actor doesn't always have or need an ability system component
+	eg. a health potion doesn't need an ability system component
+	*/
 	if (IsValid(Properties.SourceAbilitySystemComponent) 
 		&& Properties.SourceAbilitySystemComponent->AbilityActorInfo.IsValid() 
 		&& Properties.SourceAbilitySystemComponent->AbilityActorInfo->AvatarActor.IsValid())
 	{
 		Properties.SourceActor = Properties.SourceAbilitySystemComponent->AbilityActorInfo->AvatarActor.Get();
 		Properties.SourceController = Properties.SourceAbilitySystemComponent->AbilityActorInfo->PlayerController.Get();
+
 		if (Properties.SourceController && Properties.SourceActor != nullptr)
 		{
 			if (const APawn* Pawn = Cast<APawn>(Properties.SourceActor))
@@ -61,7 +67,6 @@ void UEtheriAttributeSet::GetEffectProperties(const FGameplayEffectModCallbackDa
 		{
 			Properties.SourceCharacter = Cast<ACharacter>(Properties.SourceController->GetPawn());
 		}
-
 		
 	}
 

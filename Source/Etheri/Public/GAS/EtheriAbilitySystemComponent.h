@@ -13,5 +13,11 @@ UCLASS()
 class ETHERI_API UEtheriAbilitySystemComponent : public UAbilitySystemComponent
 {
 	GENERATED_BODY()
-	
+public:
+
+	void AbilityActorInfoSet();
+
+protected:
+	void EffectApplied(UAbilitySystemComponent* InASC, const FGameplayEffectSpec& InGESpec, FActiveGameplayEffectHandle InActiveGEHandle);
+
 };

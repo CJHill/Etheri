@@ -13,9 +13,6 @@ AEtheriEffectActor::AEtheriEffectActor()
 	
 }
 
-
-
-
 void AEtheriEffectActor::BeginPlay()
 {
 	Super::BeginPlay();
@@ -31,7 +28,7 @@ void AEtheriEffectActor::ApplyGameplayEffectToActor(AActor* TargetActor, const F
 	FGameplayEffectContextHandle gameplayEffectContextHandle = targetActorASC->MakeEffectContext();
 	gameplayEffectContextHandle.AddSourceObject(this);
 
-	FGameplayEffectSpecHandle gameplayEffectSpecHandle = targetActorASC->MakeOutgoingSpec(GameplayEffect.GEClass, 1.0f, gameplayEffectContextHandle);
+	FGameplayEffectSpecHandle gameplayEffectSpecHandle = targetActorASC->MakeOutgoingSpec(GameplayEffect.GEClass, ActorLevel, gameplayEffectContextHandle);
 
 	FActiveGameplayEffectHandle activeGameplayEffectHandle = targetActorASC->ApplyGameplayEffectSpecToSelf(*gameplayEffectSpecHandle.Data.Get());
 
@@ -42,8 +39,6 @@ void AEtheriEffectActor::ApplyGameplayEffectToActor(AActor* TargetActor, const F
 		ActiveGameEffects.Add(targetActorASC,{GameplayEffect, activeGameplayEffectHandle});
 	}
 }
-
-
 
 void AEtheriEffectActor::OnOverlap(AActor* TargetActor)
 {
@@ -56,6 +51,7 @@ void AEtheriEffectActor::OnOverlap(AActor* TargetActor)
 			ApplyGameplayEffectToActor(TargetActor, Effect);
 		}
 	}
+	
 }
 
 void AEtheriEffectActor::OnEndOverlap(AActor* TargetActor)

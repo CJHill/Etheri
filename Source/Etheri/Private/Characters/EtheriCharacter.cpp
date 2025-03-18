@@ -9,6 +9,7 @@
 #include "AbilitySystemComponent.h"
 #include "UI/HUD/EtheriHUD.h"
 #include "Player/EtheriPlayerController.h"
+#include "GAS/EtheriAbilitySystemComponent.h"
 
 
 AEtheriCharacter::AEtheriCharacter()
@@ -57,6 +58,7 @@ void AEtheriCharacter::InitAbilityActorInfo()
 	if (etheriPlayerState)
 	{
 		etheriPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(etheriPlayerState, this);
+		Cast<UEtheriAbilitySystemComponent>(etheriPlayerState->GetAbilitySystemComponent())->AbilityActorInfoSet();
 		AbilitySystemComponent = etheriPlayerState->GetAbilitySystemComponent();
 		AttributeSet = etheriPlayerState->GetAttributeSet();
 	}
