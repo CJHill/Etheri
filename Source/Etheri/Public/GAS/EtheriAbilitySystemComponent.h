@@ -6,6 +6,8 @@
 #include "AbilitySystemComponent.h"
 #include "EtheriAbilitySystemComponent.generated.h"
 
+
+DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags, const FGameplayTagContainer&/*Asset Tags*/);
 /**
  * 
  */
@@ -17,6 +19,7 @@ public:
 
 	void AbilityActorInfoSet();
 
+	FEffectAssetTags EffectAssetTags;
 protected:
 	void EffectApplied(UAbilitySystemComponent* InASC, const FGameplayEffectSpec& InGESpec, FActiveGameplayEffectHandle InActiveGEHandle);
 

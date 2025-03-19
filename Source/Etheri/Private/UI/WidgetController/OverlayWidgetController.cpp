@@ -3,6 +3,7 @@
 
 #include "UI/WidgetController/OverlayWidgetController.h"
 #include "GAS/EtheriAttributeSet.h"
+#include"GAS/EtheriAbilitySystemComponent.h"
 
 void UOverlayWidgetController::BroadcastInitialValues()
 {
@@ -21,6 +22,17 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 	
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(etheriAttributeSet->GetManaAttribute()).AddUObject(this, &UOverlayWidgetController::ManaChanged);
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(etheriAttributeSet->GetMaxManaAttribute()).AddUObject(this, &UOverlayWidgetController::MaxManaChanged);
+
+	Cast<UEtheriAbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda(
+		[this](const FGameplayTagContainer& AssetTags)
+		{
+
+			for (const FGameplayTag& Tag : AssetTags)
+			{
+				FUIWidgetRow* Row = GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDataTable, Tag);
+			}
+		}
+	);
 }
 
 void UOverlayWidgetController::HealthChanged(const FOnAttributeChangeData& Data) const

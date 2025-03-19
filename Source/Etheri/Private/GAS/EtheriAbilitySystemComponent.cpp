@@ -10,5 +10,9 @@ void UEtheriAbilitySystemComponent::AbilityActorInfoSet()
 
 void UEtheriAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* InASC, const FGameplayEffectSpec& InGESpec, FActiveGameplayEffectHandle InActiveGEHandle)
 {
-	GEngine->AddOnScreenDebugMessage(1, 10.f, FColor::Blue, FString("Effect applied!"));
+	FGameplayTagContainer gameplayTagContainer;
+	InGESpec.GetAllAssetTags(gameplayTagContainer);
+
+	EffectAssetTags.Broadcast(gameplayTagContainer);
+
 }
