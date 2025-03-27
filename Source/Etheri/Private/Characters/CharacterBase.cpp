@@ -2,6 +2,7 @@
 
 
 #include "Characters/CharacterBase.h"
+#include "AbilitySystemComponent.h"
 
 // Sets default values
 ACharacterBase::ACharacterBase()
@@ -15,6 +16,16 @@ ACharacterBase::ACharacterBase()
 
 void ACharacterBase::InitAbilityActorInfo()
 {
+}
+
+void ACharacterBase::InitPrimaryAttributes()
+{
+	check(IsValid(GetAbilitySystemComponent()));
+	check(DefaultPrimaryAttributes);
+
+	const FGameplayEffectContextHandle gameplayEffectContextHandle = AbilitySystemComponent->MakeEffectContext();
+	const FGameplayEffectSpecHandle gameplayEffectSpecHandle = AbilitySystemComponent->MakeOutgoingSpec(DefaultPrimaryAttributes, 1, gameplayEffectContextHandle);
+	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*gameplayEffectSpecHandle.Data.Get(), GetAbilitySystemComponent());
 }
 
 UAbilitySystemComponent* ACharacterBase::GetAbilitySystemComponent() const

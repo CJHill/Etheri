@@ -65,12 +65,42 @@ public:
 
 	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
 
+	/*
+	* Primary Atrributes
+	*/
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Strength, Category = "Primary Atrributes")
+	FGameplayAttributeData Strength;
+	UFUNCTION()
+	void OnRep_Strength(const FGameplayAttributeData& OldStrength) const;
+	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, Strength);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Vigor, Category = "Primary Atrributes")
+	FGameplayAttributeData Vigor;
+	UFUNCTION()
+	void OnRep_Vigor(const FGameplayAttributeData& OldVigor) const;
+	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, Vigor);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Intelligence, Category = "Primary Atrributes")
+	FGameplayAttributeData Intelligence;
+	UFUNCTION()
+	void OnRep_Intelligence(const FGameplayAttributeData& OldIntelligence) const;
+	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, Intelligence);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Resilience, Category = "Primary Atrributes")
+	FGameplayAttributeData Resilience;
+	UFUNCTION()
+	void OnRep_Resilience(const FGameplayAttributeData& OldResilience) const;
+	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, Resilience);
+	/*
+	* Vital Attributes start at begin health comment
+	*/
+
 	//Begin Health attribute properties---------------------------------------
-	UPROPERTY(ReplicatedUsing = OnRep_Health)
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Health, Category = "Vital Atrributes")
 	FGameplayAttributeData Health;
 	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, Health)
 
-	UPROPERTY(ReplicatedUsing = OnRep_MaxHealth)
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxHealth, Category = "Vital Atrributes")
 	FGameplayAttributeData MaxHealth;
 	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, MaxHealth)
 
@@ -81,11 +111,11 @@ public:
 	//End Health attribute properties-------------------------------------------
 
 	//Begin Mana attribute properties---------------------------------------
-	UPROPERTY(ReplicatedUsing = OnRep_Mana)
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Mana, Category = "Vital Atrributes")
 	FGameplayAttributeData Mana;
 	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, Mana)
 
-	UPROPERTY(ReplicatedUsing = OnRep_MaxMana)
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxMana, Category = "Vital Atrributes")
 	FGameplayAttributeData MaxMana;
 	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, MaxMana)
 

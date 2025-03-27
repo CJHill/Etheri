@@ -20,6 +20,11 @@ void UEtheriAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, Strength, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, Vigor, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, Intelligence, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, Resilience, COND_None, REPNOTIFY_Always);
+
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, Health, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, MaxHealth, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, Mana, COND_None, REPNOTIFY_Always);
@@ -93,6 +98,26 @@ void UEtheriAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCall
 	{
 		SetMana(FMath::Clamp(GetMana(), 0, GetMaxMana()));
 	}
+}
+
+void UEtheriAttributeSet::OnRep_Strength(const FGameplayAttributeData& OldStrength) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, Strength, OldStrength);
+}
+
+void UEtheriAttributeSet::OnRep_Vigor(const FGameplayAttributeData& OldVigor) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, Vigor, OldVigor);
+}
+
+void UEtheriAttributeSet::OnRep_Intelligence(const FGameplayAttributeData& OldIntelligence) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, Intelligence, OldIntelligence);
+}
+
+void UEtheriAttributeSet::OnRep_Resilience(const FGameplayAttributeData& OldResilience) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, Resilience, OldResilience);
 }
 
 void UEtheriAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) const
