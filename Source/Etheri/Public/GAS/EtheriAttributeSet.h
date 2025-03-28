@@ -91,6 +91,72 @@ public:
 	UFUNCTION()
 	void OnRep_Resilience(const FGameplayAttributeData& OldResilience) const;
 	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, Resilience);
+
+	/*
+	* Secondary Attributes
+	*/
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Armour, Category = "Secondary Atrributes")
+	FGameplayAttributeData Armour;
+	UFUNCTION()
+	void OnRep_Armour(const FGameplayAttributeData& OldArmour) const;
+	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, Armour);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ArmourPenetration, Category = "Secondary Atrributes")
+	FGameplayAttributeData ArmourPenetration;
+	UFUNCTION()
+	void OnRep_ArmourPenetration(const FGameplayAttributeData& OldArmourPenetration) const;
+	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, ArmourPenetration);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_BlockChance, Category = "Secondary Atrributes")
+	FGameplayAttributeData BlockChance;
+	UFUNCTION()
+	void OnRep_BlockChance(const FGameplayAttributeData& OldBlockChance) const;
+	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, BlockChance);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_CriticalHitRate, Category = "Secondary Atrributes")
+	FGameplayAttributeData CriticalHitRate;
+	UFUNCTION()
+	void OnRep_CriticalHitRate(const FGameplayAttributeData& OldCriticalHitRate) const;
+	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, CriticalHitRate);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_CriticalHitDamage, Category = "Secondary Atrributes")
+	FGameplayAttributeData CriticalHitDamage;
+	UFUNCTION()
+	void OnRep_CriticalHitDamage(const FGameplayAttributeData& OldCriticalHitDamage) const;
+	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, CriticalHitDamage);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_CriticalHitResistance, Category = "Secondary Atrributes")
+	FGameplayAttributeData CriticalHitResistance;
+	UFUNCTION()
+	void OnRep_CriticalHitResistance(const FGameplayAttributeData& OldCriticalHitResistance) const;
+	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, CriticalHitResistance);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxHealth, Category = "Secondary Atrributes")
+	FGameplayAttributeData MaxHealth;
+	UFUNCTION()
+	void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const;
+	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, MaxHealth)
+	
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_HealthRegen, Category = "Secondary Atrributes")
+	FGameplayAttributeData HealthRegen;
+	UFUNCTION()
+	void OnRep_HealthRegen(const FGameplayAttributeData& OldHealthRegen) const;
+	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, HealthRegen)
+
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxMana, Category = "Secondary Atrributes")
+	FGameplayAttributeData MaxMana;
+	UFUNCTION()
+	void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const;
+	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, MaxMana)
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ManaRegen, Category = "Secondary Atrributes")
+	FGameplayAttributeData ManaRegen;
+	UFUNCTION()
+	void OnRep_ManaRegen(const FGameplayAttributeData& OldManaRegen) const;
+	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, ManaRegen)
+
 	/*
 	* Vital Attributes start at begin health comment
 	*/
@@ -99,30 +165,18 @@ public:
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Health, Category = "Vital Atrributes")
 	FGameplayAttributeData Health;
 	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, Health)
-
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxHealth, Category = "Vital Atrributes")
-	FGameplayAttributeData MaxHealth;
-	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, MaxHealth)
-
 	UFUNCTION()
 	void OnRep_Health(const FGameplayAttributeData& OldHealth) const;
-	UFUNCTION()
-	void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const;
+	
 	//End Health attribute properties-------------------------------------------
 
 	//Begin Mana attribute properties---------------------------------------
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Mana, Category = "Vital Atrributes")
 	FGameplayAttributeData Mana;
 	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, Mana)
-
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxMana, Category = "Vital Atrributes")
-	FGameplayAttributeData MaxMana;
-	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, MaxMana)
-
 	UFUNCTION()
 	void OnRep_Mana(const FGameplayAttributeData& OldMana) const;
-	UFUNCTION()
-	void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const;
+
 	//End Mana attribute properties-------------------------------------------
 
 private:

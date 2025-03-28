@@ -69,5 +69,5 @@ void AEtheriCharacter::InitAbilityActorInfo()
 			etheriHUD->InitOverlay(etheriPlayerController, etheriPlayerState, AbilitySystemComponent, AttributeSet);
 		}
 	}
-	InitPrimaryAttributes();
+	InitDefaultAttributes();
 }

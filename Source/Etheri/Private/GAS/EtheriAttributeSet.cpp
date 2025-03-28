@@ -11,24 +11,35 @@
 UEtheriAttributeSet::UEtheriAttributeSet()
 {
 	InitHealth(50.f);
-	InitMaxHealth(100.f);
 	InitMana(50.f);
-	InitMaxMana(100.f);
+	
 }
 
 void UEtheriAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
+	//Primary Attributes
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, Strength, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, Vigor, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, Intelligence, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, Resilience, COND_None, REPNOTIFY_Always);
 
-	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, Health, COND_None, REPNOTIFY_Always);
+	//Secondary Attributes
+	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, Armour, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, ArmourPenetration, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, BlockChance, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, CriticalHitRate, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, CriticalHitDamage, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, CriticalHitResistance, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, MaxHealth, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, Mana, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, HealthRegen, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, MaxMana, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, ManaRegen, COND_None, REPNOTIFY_Always);
+
+	//Vital Attributes
+	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, Health, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, Mana, COND_None, REPNOTIFY_Always);
+	
 }
 
 void UEtheriAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
@@ -120,6 +131,36 @@ void UEtheriAttributeSet::OnRep_Resilience(const FGameplayAttributeData& OldResi
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, Resilience, OldResilience);
 }
 
+void UEtheriAttributeSet::OnRep_Armour(const FGameplayAttributeData& OldArmour) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, Armour, OldArmour);
+}
+
+void UEtheriAttributeSet::OnRep_ArmourPenetration(const FGameplayAttributeData& OldArmourPenetration) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, ArmourPenetration, OldArmourPenetration);
+}
+
+void UEtheriAttributeSet::OnRep_BlockChance(const FGameplayAttributeData& OldBlockChance) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, BlockChance, OldBlockChance);
+}
+
+void UEtheriAttributeSet::OnRep_CriticalHitRate(const FGameplayAttributeData& OldCriticalHitRate) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, CriticalHitRate, OldCriticalHitRate);
+}
+
+void UEtheriAttributeSet::OnRep_CriticalHitDamage(const FGameplayAttributeData& OldCriticalHitDamage) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, CriticalHitDamage, OldCriticalHitDamage);
+}
+
+void UEtheriAttributeSet::OnRep_CriticalHitResistance(const FGameplayAttributeData& OldCriticalHitResistance) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, CriticalHitResistance, OldCriticalHitResistance);
+}
+
 void UEtheriAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, Health, OldHealth);
@@ -130,6 +171,11 @@ void UEtheriAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHe
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, MaxHealth, OldMaxHealth);
 }
 
+void UEtheriAttributeSet::OnRep_HealthRegen(const FGameplayAttributeData& OldHealthRegen) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, HealthRegen, OldHealthRegen);
+}
+
 void UEtheriAttributeSet::OnRep_Mana(const FGameplayAttributeData& OldMana) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, Mana, OldMana);
@@ -138,6 +184,11 @@ void UEtheriAttributeSet::OnRep_Mana(const FGameplayAttributeData& OldMana) cons
 void UEtheriAttributeSet::OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, MaxMana, OldMaxMana);
+}
+
+void UEtheriAttributeSet::OnRep_ManaRegen(const FGameplayAttributeData& OldManaRegen) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, ManaRegen, OldManaRegen);
 }
 
 
