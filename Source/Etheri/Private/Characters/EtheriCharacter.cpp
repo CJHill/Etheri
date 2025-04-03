@@ -71,3 +71,13 @@ void AEtheriCharacter::InitAbilityActorInfo()
 	}
 	InitDefaultAttributes();
 }
+
+int32 AEtheriCharacter::GetLevel()
+{
+	const AEtheriPlayerState* etheriPlayerState = GetPlayerState<AEtheriPlayerState>();
+	check(etheriPlayerState)
+	
+	return etheriPlayerState->GetPlayerLevel();
+	
+	
+}

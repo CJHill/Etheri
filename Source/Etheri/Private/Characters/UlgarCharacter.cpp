@@ -18,6 +18,11 @@ AUlgarCharacter::AUlgarCharacter()
 	AttributeSet = CreateDefaultSubobject<UEtheriAttributeSet>("Attribute Set");
 }
 
+int32 AUlgarCharacter::GetLevel()
+{
+	return Level;
+}
+
 void AUlgarCharacter::BeginPlay()
 {
 	Super::BeginPlay();

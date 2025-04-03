@@ -24,6 +24,10 @@ protected:
 	virtual void OnRep_PlayerState() override;
 
 	virtual void InitAbilityActorInfo() override;
+
+	//Combat Interface
+	virtual int32 GetLevel() override;
+	//End Combat Interface
 private:
 	
 

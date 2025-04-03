@@ -18,6 +18,7 @@ class ETHERI_API AEtheriPlayerState : public APlayerState, public IAbilitySystem
 public:
 	AEtheriPlayerState();
 
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 protected:
 
 	UPROPERTY(VisibleAnywhere)
@@ -27,8 +28,13 @@ protected:
 	TObjectPtr<UAttributeSet> AttributeSet;
 
 private:
+	UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_Level)
+	int32 Level = 1;
 
+	UFUNCTION()
+	void OnRep_Level(int32 OldLevel);
 public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const;
+	FORCEINLINE int32 GetPlayerLevel() const { return Level; };
 };

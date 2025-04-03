@@ -17,14 +17,22 @@ class ETHERI_API AUlgarCharacter : public ACharacterBase, public IEnemyInterface
 public:
 	AUlgarCharacter();
 
-	//Enemy Interface Functions
+	//Enemy Interface 
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
-	//End of Enemy Interface Functions
+	//End of Enemy Interface 
 
-
+	//Combat Interface
+	virtual int32 GetLevel() override;
 protected:
 	virtual void BeginPlay() override;
 	
 	virtual void InitAbilityActorInfo() override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Enemy Properties")
+	int32 Level = 1;
+private:
+	
+
+
 };

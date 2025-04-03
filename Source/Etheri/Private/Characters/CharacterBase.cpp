@@ -29,9 +29,12 @@ void ACharacterBase::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffe
 	check(IsValid(GetAbilitySystemComponent()));
 	check(GameplayEffectClass);
 
-	const FGameplayEffectContextHandle gameplayEffectContextHandle = AbilitySystemComponent->MakeEffectContext();
+	FGameplayEffectContextHandle gameplayEffectContextHandle = AbilitySystemComponent->MakeEffectContext();
+	gameplayEffectContextHandle.AddSourceObject(this);
 	const FGameplayEffectSpecHandle gameplayEffectSpecHandle = AbilitySystemComponent->MakeOutgoingSpec(GameplayEffectClass, Level, gameplayEffectContextHandle);
+	
 	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*gameplayEffectSpecHandle.Data.Get(), GetAbilitySystemComponent());
+	
 }
 
 UAbilitySystemComponent* ACharacterBase::GetAbilitySystemComponent() const
