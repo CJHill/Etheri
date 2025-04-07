@@ -17,17 +17,17 @@ UMMC_MaxHealth::UMMC_MaxHealth()
 float UMMC_MaxHealth::CalculateBaseMagnitude_Implementation(const FGameplayEffectSpec& EffectSpec) const
 {
 	//Gather Tags from source and target
-	const FGameplayTagContainer* SourceTags = EffectSpec.CapturedSourceTags.GetAggregatedTags();
-	const FGameplayTagContainer* TargetTags = EffectSpec.CapturedTargetTags.GetAggregatedTags();
+	const FGameplayTagContainer* sourceTags = EffectSpec.CapturedSourceTags.GetAggregatedTags();
+	const FGameplayTagContainer* targetTags = EffectSpec.CapturedTargetTags.GetAggregatedTags();
 
-	FAggregatorEvaluateParameters EvaluationParams;
-	EvaluationParams.SourceTags = SourceTags;
-	EvaluationParams.TargetTags = TargetTags;
+	FAggregatorEvaluateParameters evaluationParams;
+	evaluationParams.SourceTags = sourceTags;
+	evaluationParams.TargetTags = targetTags;
 
 	//GetCapturedAttributeMagnitude sets this vigor variable by passing in the value of VigorDef's magnitude
 	float vigor = 0.f;
 
-	GetCapturedAttributeMagnitude(VigorDef, EffectSpec, EvaluationParams, vigor);
+	GetCapturedAttributeMagnitude(VigorDef, EffectSpec, evaluationParams, vigor);
 	vigor = FMath::Max<float>(vigor, 0);
 
 	ICombatInterface* combatInterface = Cast<ICombatInterface>(EffectSpec.GetContext().GetSourceObject());

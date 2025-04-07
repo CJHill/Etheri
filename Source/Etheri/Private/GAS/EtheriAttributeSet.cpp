@@ -10,8 +10,7 @@
 
 UEtheriAttributeSet::UEtheriAttributeSet()
 {
-	InitHealth(50.f);
-	InitMana(50.f);
+	
 	
 }
 
