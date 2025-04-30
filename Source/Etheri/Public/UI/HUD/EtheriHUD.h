@@ -8,6 +8,7 @@
 
 class UEtheriUserWidget;
 class UOverlayWidgetController;
+class UAttributeMenuWidgetController;
 class UAbilitySystemComponent;
 class UAttributeSet;
 struct FWidgetControllerParams;
@@ -21,13 +22,17 @@ class ETHERI_API AEtheriHUD : public AHUD
 	
 public:
 
-	UPROPERTY()
-	TObjectPtr<UEtheriUserWidget> OverlayWidget;
 
 	void InitOverlay(APlayerController* PController, APlayerState* PState, UAbilitySystemComponent* ASComponent, UAttributeSet* ASet);
+
+	
 protected:
 	
 private:
+	//Overlay Widget Properties
+	UPROPERTY()
+	TObjectPtr<UEtheriUserWidget> OverlayWidget;
+
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UEtheriUserWidget> OverlayWidgetClass;
 
@@ -35,6 +40,16 @@ private:
 	TObjectPtr<UOverlayWidgetController> OverlayWidgetController;
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UOverlayWidgetController> OverlayWidgetControllerClass;
+
+	//Attribute Menu Widget Properties
+
+	UPROPERTY()
+	TObjectPtr<UAttributeMenuWidgetController> AttributeMenuController;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UAttributeMenuWidgetController> AttributeMenuControllerClass;
 public:
 	UOverlayWidgetController* GetOverlayWidgetController(const FWidgetControllerParams& WidgetControllerParams);
+
+	UAttributeMenuWidgetController* GetAttributeMenuWidgetController(const FWidgetControllerParams& WidgetControllerParams);
 };
