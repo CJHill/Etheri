@@ -70,6 +70,7 @@ void AEtheriCharacter::InitAbilityActorInfo()
 		}
 	}
 	InitDefaultAttributes();
+	
 }
 
 int32 AEtheriCharacter::GetLevel()

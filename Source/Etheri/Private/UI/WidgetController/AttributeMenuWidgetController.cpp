@@ -14,7 +14,7 @@ void UAttributeMenuWidgetController::BroadcastInitialValues()
 	FEtheriAttributeInfo info = AttributeInfo->FindAttributeInfoForTag(FEtheriGameplayTags::Get().Attributes_Primary_Strength);
 
 	info.AttributeValue = attributeSet->GetStrength();
-
+	
 	AttributeInfoDelegate.Broadcast(info);
 }
 
