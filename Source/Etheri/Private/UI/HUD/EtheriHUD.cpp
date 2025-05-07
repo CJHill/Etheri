@@ -34,7 +34,7 @@ UOverlayWidgetController* AEtheriHUD::GetOverlayWidgetController(const FWidgetCo
 		OverlayWidgetController = NewObject<UOverlayWidgetController>(this, OverlayWidgetControllerClass);
 		OverlayWidgetController->SetWidgetControllerParams(WidgetControllerParams);
 		OverlayWidgetController->BindCallbacksToDependencies();
-		return OverlayWidgetController;
+		
 	}
 	return OverlayWidgetController;
 }
@@ -46,7 +46,7 @@ UAttributeMenuWidgetController* AEtheriHUD::GetAttributeMenuWidgetController(con
 		AttributeMenuController = NewObject<UAttributeMenuWidgetController>(this, AttributeMenuControllerClass);
 		AttributeMenuController->SetWidgetControllerParams(WidgetControllerParams);
 		AttributeMenuController->BindCallbacksToDependencies();
-		return AttributeMenuController;
+		
 	}
 	return AttributeMenuController;
 }

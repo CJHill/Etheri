@@ -5,6 +5,7 @@
 #include <UI/HUD/EtheriHUD.h>
 #include <Player/EtheriPlayerState.h>
 #include "UI/WidgetController/EtheriWidgetController.h"
+#include "Kismet/GameplayStatics.h"
 
 
 UOverlayWidgetController* UEtheriAbilitySystemLibrary::GetOverlayWidgetController(const UObject* WorldContextObject)
@@ -28,7 +29,7 @@ UOverlayWidgetController* UEtheriAbilitySystemLibrary::GetOverlayWidgetControlle
 
 UAttributeMenuWidgetController* UEtheriAbilitySystemLibrary::GetAttributeMenuWidgetController(const UObject* WorldContextObject)
 {
-	if (APlayerController* playerController = WorldContextObject->GetWorld()->UWorld::GetFirstPlayerController())
+	if (APlayerController* playerController = UGameplayStatics::GetPlayerController(WorldContextObject, 0))
 	{
 		if (AEtheriHUD* etheriHUD = Cast<AEtheriHUD>(playerController->GetHUD()))
 		{

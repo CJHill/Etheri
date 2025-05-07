@@ -3,7 +3,7 @@
 
 #include "GAS/Data/AttributeInfoAsset.h"
 
-FEtheriAttributeInfo UAttributeInfoAsset::FindAttributeInfoForTag(const FGameplayTag& AttributeTag, bool bLogNotFound)
+FEtheriAttributeInfo UAttributeInfoAsset::FindAttributeInfoForTag(const FGameplayTag& AttributeTag, bool bLogNotFound) const
 {
 	for (const FEtheriAttributeInfo& Info : AttributeInfo)
 	{

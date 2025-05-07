@@ -62,6 +62,8 @@ void AEtheriCharacter::InitAbilityActorInfo()
 		AbilitySystemComponent = etheriPlayerState->GetAbilitySystemComponent();
 		AttributeSet = etheriPlayerState->GetAttributeSet();
 	}
+	InitialDefaultAttributes();
+
 	if (AEtheriPlayerController* etheriPlayerController = Cast<AEtheriPlayerController>(GetController()))
 	{
 		if (AEtheriHUD* etheriHUD = Cast<AEtheriHUD>(etheriPlayerController->GetHUD()))
@@ -69,7 +71,7 @@ void AEtheriCharacter::InitAbilityActorInfo()
 			etheriHUD->InitOverlay(etheriPlayerController, etheriPlayerState, AbilitySystemComponent, AttributeSet);
 		}
 	}
-	InitDefaultAttributes();
+	
 	
 }
 

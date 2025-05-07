@@ -21,6 +21,6 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Etheri Ability System Libray|Widget Controller", meta = (WorldContext = "WorldContextObject"))
 	static UOverlayWidgetController* GetOverlayWidgetController(const UObject* WorldContextObject);
 
-	UFUNCTION(BlueprintPure, Category = "Etheri Ability System Libray|Widget Controller", meta = (WorldContext = "WorldContextObject"))
+	UFUNCTION(BlueprintPure, Category = "Etheri Ability System Libray|Widget Controller")
 	static UAttributeMenuWidgetController* GetAttributeMenuWidgetController(const UObject* WorldContextObject);
 };

@@ -35,7 +35,7 @@ class ETHERI_API UAttributeInfoAsset : public UDataAsset
 	
 public:
 
-	FEtheriAttributeInfo FindAttributeInfoForTag(const FGameplayTag& AttributeTag, bool bLogNotFound = false);
+	FEtheriAttributeInfo FindAttributeInfoForTag(const FGameplayTag& AttributeTag, bool bLogNotFound = false) const;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TArray<FEtheriAttributeInfo> AttributeInfo;

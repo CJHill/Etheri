@@ -18,7 +18,7 @@ void ACharacterBase::InitAbilityActorInfo()
 {
 }
 
-void ACharacterBase::InitDefaultAttributes() const
+void ACharacterBase::InitialDefaultAttributes() const
 {
 	ApplyEffectToSelf(DefaultPrimaryAttributes, 1.f);
 	ApplyEffectToSelf(DefaultSecondaryAttributes, 1.f);

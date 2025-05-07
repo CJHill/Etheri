@@ -6,12 +6,29 @@
 #include "GameFramework/Character.h"
 #include "Net/UnrealNetwork.h"
 #include "GameplayEffectExtension.h"
+#include "Tag/EtheriGameplayTags.h"
 
 
 UEtheriAttributeSet::UEtheriAttributeSet()
 {
+	const FEtheriGameplayTags& gameplayTags = FEtheriGameplayTags::Get();
+
+	TagsToAttributes.Add(gameplayTags.Attributes_Primary_Strength, GetStrengthAttribute);
+	TagsToAttributes.Add(gameplayTags.Attributes_Primary_Intelligence, GetIntelligenceAttribute);
+	TagsToAttributes.Add(gameplayTags.Attributes_Primary_Resilience, GetResilienceAttribute);
+	TagsToAttributes.Add(gameplayTags.Attributes_Primary_Vigor, GetVigorAttribute);
 	
-	
+	TagsToAttributes.Add(gameplayTags.Attributes_Secondary_Armour, GetArmourAttribute);
+	TagsToAttributes.Add(gameplayTags.Attributes_Secondary_ArmourPenetration, GetArmourPenetrationAttribute);
+	TagsToAttributes.Add(gameplayTags.Attributes_Secondary_BlockChance, GetBlockChanceAttribute);
+	TagsToAttributes.Add(gameplayTags.Attributes_Secondary_CriticalHitRate, GetCriticalHitRateAttribute);
+	TagsToAttributes.Add(gameplayTags.Attributes_Secondary_CriticalHitDamage, GetCriticalHitDamageAttribute);
+	TagsToAttributes.Add(gameplayTags.Attributes_Secondary_CriticalHitResistance, GetCriticalHitResistanceAttribute);
+	TagsToAttributes.Add(gameplayTags.Attributes_Secondary_MaxHealth, GetMaxHealthAttribute);
+	TagsToAttributes.Add(gameplayTags.Attributes_Secondary_HealthRegen, GetHealthRegenAttribute);
+	TagsToAttributes.Add(gameplayTags.Attributes_Secondary_MaxMana, GetMaxManaAttribute);
+	TagsToAttributes.Add(gameplayTags.Attributes_Secondary_ManaRegen, GetManaRegenAttribute);
+
 }
 
 void UEtheriAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

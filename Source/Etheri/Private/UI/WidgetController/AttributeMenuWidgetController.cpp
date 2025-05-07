@@ -8,14 +8,15 @@
 
 void UAttributeMenuWidgetController::BroadcastInitialValues()
 {
-	UEtheriAttributeSet* attributeSet = Cast<UEtheriAttributeSet>(AttributeSet);
+	UEtheriAttributeSet* AS = Cast<UEtheriAttributeSet>(AttributeSet);
 	
 	check(AttributeInfo);
-	FEtheriAttributeInfo info = AttributeInfo->FindAttributeInfoForTag(FEtheriGameplayTags::Get().Attributes_Primary_Strength);
-
-	info.AttributeValue = attributeSet->GetStrength();
-	
-	AttributeInfoDelegate.Broadcast(info);
+	for (auto& Pair : AS->TagsToAttributes)
+	{
+		FEtheriAttributeInfo Info = AttributeInfo->FindAttributeInfoForTag(Pair.Key);
+		Info.AttributeValue = Pair.Value().GetNumericValue(AS);
+		AttributeInfoDelegate.Broadcast(Info);
+	}
 }
 
 void UAttributeMenuWidgetController::BindCallbacksToDependencies()

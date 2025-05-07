@@ -14,6 +14,7 @@ AEtheriPlayerState::AEtheriPlayerState()
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 	AttributeSet = CreateDefaultSubobject<UEtheriAttributeSet>("Attribute Set");
+
 }
 
 void AEtheriPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
