@@ -77,25 +77,25 @@ public:
 	FGameplayAttributeData Strength;
 	UFUNCTION()
 	void OnRep_Strength(const FGameplayAttributeData& OldStrength) const;
-	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, Strength);
+	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, Strength)
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Vigor, Category = "Primary Atrributes")
 	FGameplayAttributeData Vigor;
 	UFUNCTION()
 	void OnRep_Vigor(const FGameplayAttributeData& OldVigor) const;
-	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, Vigor);
+	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, Vigor)
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Intelligence, Category = "Primary Atrributes")
 	FGameplayAttributeData Intelligence;
 	UFUNCTION()
 	void OnRep_Intelligence(const FGameplayAttributeData& OldIntelligence) const;
-	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, Intelligence);
+	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, Intelligence)
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Resilience, Category = "Primary Atrributes")
 	FGameplayAttributeData Resilience;
 	UFUNCTION()
 	void OnRep_Resilience(const FGameplayAttributeData& OldResilience) const;
-	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, Resilience);
+	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, Resilience)
 
 	/*
 	* Secondary Attributes
@@ -104,37 +104,37 @@ public:
 	FGameplayAttributeData Armour;
 	UFUNCTION()
 	void OnRep_Armour(const FGameplayAttributeData& OldArmour) const;
-	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, Armour);
+	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, Armour)
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ArmourPenetration, Category = "Secondary Atrributes")
 	FGameplayAttributeData ArmourPenetration;
 	UFUNCTION()
 	void OnRep_ArmourPenetration(const FGameplayAttributeData& OldArmourPenetration) const;
-	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, ArmourPenetration);
+	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, ArmourPenetration)
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_BlockChance, Category = "Secondary Atrributes")
 	FGameplayAttributeData BlockChance;
 	UFUNCTION()
 	void OnRep_BlockChance(const FGameplayAttributeData& OldBlockChance) const;
-	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, BlockChance);
+	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, BlockChance)
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_CriticalHitRate, Category = "Secondary Atrributes")
 	FGameplayAttributeData CriticalHitRate;
 	UFUNCTION()
 	void OnRep_CriticalHitRate(const FGameplayAttributeData& OldCriticalHitRate) const;
-	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, CriticalHitRate);
+	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, CriticalHitRate)
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_CriticalHitDamage, Category = "Secondary Atrributes")
 	FGameplayAttributeData CriticalHitDamage;
 	UFUNCTION()
 	void OnRep_CriticalHitDamage(const FGameplayAttributeData& OldCriticalHitDamage) const;
-	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, CriticalHitDamage);
+	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, CriticalHitDamage)
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_CriticalHitResistance, Category = "Secondary Atrributes")
 	FGameplayAttributeData CriticalHitResistance;
 	UFUNCTION()
 	void OnRep_CriticalHitResistance(const FGameplayAttributeData& OldCriticalHitResistance) const;
-	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, CriticalHitResistance);
+	ATTRIBUTE_ACCESSORS(UEtheriAttributeSet, CriticalHitResistance)
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxHealth, Category = "Secondary Atrributes")
 	FGameplayAttributeData MaxHealth;

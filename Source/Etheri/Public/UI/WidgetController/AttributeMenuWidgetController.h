@@ -4,10 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "UI/WidgetController/EtheriWidgetController.h"
+#include <GameplayModMagnitudeCalculation.h>
 #include "AttributeMenuWidgetController.generated.h"
 
+
+struct FGameplayAttribute;
 struct FEtheriAttributeInfo;
 class UAttributeInfoAsset;
+
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAttributeInfoSignature, const FEtheriAttributeInfo&, Info);
 /**
  * 
@@ -29,4 +34,7 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UAttributeInfoAsset> AttributeInfo;
+
+private:
+	void BroadcastAttributeInfo(const FGameplayTag& AttributeTag, const FGameplayAttribute& Attribute) const;
 };
