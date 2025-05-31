@@ -2,65 +2,72 @@
 
 
 #include "GAS/EtheriAttributeSet.h"
+
 #include "AbilitySystemBlueprintLibrary.h"
 #include "GameFramework/Character.h"
-#include "Net/UnrealNetwork.h"
 #include "GameplayEffectExtension.h"
+#include "Net/UnrealNetwork.h"
 #include "Tag/EtheriGameplayTags.h"
-
 
 UEtheriAttributeSet::UEtheriAttributeSet()
 {
-	const FEtheriGameplayTags& gameplayTags = FEtheriGameplayTags::Get();
+	const FEtheriGameplayTags& GameplayTags = FEtheriGameplayTags::Get();
 
-	TagsToAttributes.Add(gameplayTags.Attributes_Primary_Strength, GetStrengthAttribute);
-	TagsToAttributes.Add(gameplayTags.Attributes_Primary_Intelligence, GetIntelligenceAttribute);
-	TagsToAttributes.Add(gameplayTags.Attributes_Primary_Resilience, GetResilienceAttribute);
-	TagsToAttributes.Add(gameplayTags.Attributes_Primary_Vigor, GetVigorAttribute);
-	
-	TagsToAttributes.Add(gameplayTags.Attributes_Secondary_Armour, GetArmourAttribute);
-	TagsToAttributes.Add(gameplayTags.Attributes_Secondary_ArmourPenetration, GetArmourPenetrationAttribute);
-	TagsToAttributes.Add(gameplayTags.Attributes_Secondary_BlockChance, GetBlockChanceAttribute);
-	TagsToAttributes.Add(gameplayTags.Attributes_Secondary_CriticalHitRate, GetCriticalHitRateAttribute);
-	TagsToAttributes.Add(gameplayTags.Attributes_Secondary_CriticalHitDamage, GetCriticalHitDamageAttribute);
-	TagsToAttributes.Add(gameplayTags.Attributes_Secondary_CriticalHitResistance, GetCriticalHitResistanceAttribute);
-	TagsToAttributes.Add(gameplayTags.Attributes_Secondary_MaxHealth, GetMaxHealthAttribute);
-	TagsToAttributes.Add(gameplayTags.Attributes_Secondary_HealthRegen, GetHealthRegenAttribute);
-	TagsToAttributes.Add(gameplayTags.Attributes_Secondary_MaxMana, GetMaxManaAttribute);
-	TagsToAttributes.Add(gameplayTags.Attributes_Secondary_ManaRegen, GetManaRegenAttribute);
+	/* Primary Attributes */
+	TagsToAttributes.Add(GameplayTags.Attributes_Primary_Strength, GetStrengthAttribute);
+	TagsToAttributes.Add(GameplayTags.Attributes_Primary_Intelligence, GetIntelligenceAttribute);
+	TagsToAttributes.Add(GameplayTags.Attributes_Primary_Resilience, GetResilienceAttribute);
+	TagsToAttributes.Add(GameplayTags.Attributes_Primary_Vigor, GetVigorAttribute);
+
+	/* Secondary Attributes */
+	TagsToAttributes.Add(GameplayTags.Attributes_Secondary_Armour, GetArmourAttribute);
+	TagsToAttributes.Add(GameplayTags.Attributes_Secondary_ArmourPenetration, GetArmourPenetrationAttribute);
+	TagsToAttributes.Add(GameplayTags.Attributes_Secondary_BlockChance, GetBlockChanceAttribute);
+	TagsToAttributes.Add(GameplayTags.Attributes_Secondary_CriticalHitRate, GetCriticalHitRateAttribute);
+	TagsToAttributes.Add(GameplayTags.Attributes_Secondary_CriticalHitResistance, GetCriticalHitResistanceAttribute);
+	TagsToAttributes.Add(GameplayTags.Attributes_Secondary_CriticalHitDamage, GetCriticalHitDamageAttribute);
+	TagsToAttributes.Add(GameplayTags.Attributes_Secondary_HealthRegen, GetHealthRegenAttribute);
+	TagsToAttributes.Add(GameplayTags.Attributes_Secondary_ManaRegen, GetManaRegenAttribute);
+	TagsToAttributes.Add(GameplayTags.Attributes_Secondary_MaxHealth, GetMaxHealthAttribute);
+	TagsToAttributes.Add(GameplayTags.Attributes_Secondary_MaxMana, GetMaxManaAttribute);
 
 }
 
 void UEtheriAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-	//Primary Attributes
+
+	// Primary Attributes
+
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, Strength, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, Vigor, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, Intelligence, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, Resilience, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, Vigor, COND_None, REPNOTIFY_Always);
 
-	//Secondary Attributes
+	// Secondary Attributes
+
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, Armour, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, ArmourPenetration, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, BlockChance, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, CriticalHitRate, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, CriticalHitDamage, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, CriticalHitResistance, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, MaxHealth, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, HealthRegen, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, MaxMana, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, ManaRegen, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, MaxHealth, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, MaxMana, COND_None, REPNOTIFY_Always);
 
-	//Vital Attributes
+	// Vital Attributes
+
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, Health, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UEtheriAttributeSet, Mana, COND_None, REPNOTIFY_Always);
-	
+
 }
 
 void UEtheriAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
 {
 	Super::PreAttributeChange(Attribute, NewValue);
+
 	if (Attribute == GetHealthAttribute())
 	{
 		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxHealth());
@@ -71,70 +78,69 @@ void UEtheriAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute
 	}
 }
 
-void UEtheriAttributeSet::GetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Properties) const
+void UEtheriAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const
 {
-	
-	Properties.EffectContextHandle = Data.EffectSpec.GetContext();
-	Properties.SourceAbilitySystemComponent = Properties.EffectContextHandle.GetInstigatorAbilitySystemComponent();
+	// Source = causer of the effect, Target = target of the effect (owner of this AS)
 
-	/*
-	the reason for not using the negation operator (!) and returning early when checking the source ability system component is because the source actor doesn't always have or need an ability system component
-	eg. a health potion doesn't need an ability system component
-	*/
-	if (IsValid(Properties.SourceAbilitySystemComponent) 
-		&& Properties.SourceAbilitySystemComponent->AbilityActorInfo.IsValid() 
-		&& Properties.SourceAbilitySystemComponent->AbilityActorInfo->AvatarActor.IsValid())
+	Props.EffectContextHandle = Data.EffectSpec.GetContext();
+	Props.SourceASC = Props.EffectContextHandle.GetOriginalInstigatorAbilitySystemComponent();
+
+	if (IsValid(Props.SourceASC) && Props.SourceASC->AbilityActorInfo.IsValid() && Props.SourceASC->AbilityActorInfo->AvatarActor.IsValid())
 	{
-		Properties.SourceActor = Properties.SourceAbilitySystemComponent->AbilityActorInfo->AvatarActor.Get();
-		Properties.SourceController = Properties.SourceAbilitySystemComponent->AbilityActorInfo->PlayerController.Get();
-
-		if (Properties.SourceController && Properties.SourceActor != nullptr)
+		Props.SourceAvatarActor = Props.SourceASC->AbilityActorInfo->AvatarActor.Get();
+		Props.SourceController = Props.SourceASC->AbilityActorInfo->PlayerController.Get();
+		if (Props.SourceController == nullptr && Props.SourceAvatarActor != nullptr)
 		{
-			if (const APawn* Pawn = Cast<APawn>(Properties.SourceActor))
+			if (const APawn* Pawn = Cast<APawn>(Props.SourceAvatarActor))
 			{
-				Properties.SourceController = Pawn->GetController();
+				Props.SourceController = Pawn->GetController();
 			}
 		}
-		if (Properties.SourceController)
+		if (Props.SourceController)
 		{
-			Properties.SourceCharacter = Cast<ACharacter>(Properties.SourceController->GetPawn());
+			ACharacter* SourceCharacter = Cast<ACharacter>(Props.SourceController->GetPawn());
 		}
-		
 	}
 
 	if (Data.Target.AbilityActorInfo.IsValid() && Data.Target.AbilityActorInfo->AvatarActor.IsValid())
 	{
-		Properties.TargetActor = Data.Target.AbilityActorInfo->AvatarActor.Get();
-		Properties.TargetCharacter = Cast<ACharacter>(Properties.TargetActor);
-		Properties.TargetController = Data.Target.AbilityActorInfo->PlayerController.Get();
-		Properties.TargetAbilitySystemComponent = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(Properties.TargetActor);
+		Props.TargetAvatarActor = Data.Target.AbilityActorInfo->AvatarActor.Get();
+		Props.TargetController = Data.Target.AbilityActorInfo->PlayerController.Get();
+		Props.TargetCharacter = Cast<ACharacter>(Props.TargetAvatarActor);
+		Props.TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(Props.TargetAvatarActor);
 	}
 }
 
 void UEtheriAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
 	Super::PostGameplayEffectExecute(Data);
-	
+
 	FEffectProperties Props;
-	GetEffectProperties(Data, Props);
+	SetEffectProperties(Data, Props);
+
 	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{
-		SetHealth(FMath::Clamp(GetHealth(), 0, GetMaxHealth()));
+		SetHealth(FMath::Clamp(GetHealth(), 0.f, GetMaxHealth()));
 	}
 	if (Data.EvaluatedData.Attribute == GetManaAttribute())
 	{
-		SetMana(FMath::Clamp(GetMana(), 0, GetMaxMana()));
+		SetMana(FMath::Clamp(GetMana(), 0.f, GetMaxMana()));
 	}
+}
+
+void UEtheriAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, Health, OldHealth);
+}
+
+void UEtheriAttributeSet::OnRep_Mana(const FGameplayAttributeData& OldMana) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, Mana, OldMana);
 }
 
 void UEtheriAttributeSet::OnRep_Strength(const FGameplayAttributeData& OldStrength) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, Strength, OldStrength);
-}
-
-void UEtheriAttributeSet::OnRep_Vigor(const FGameplayAttributeData& OldVigor) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, Vigor, OldVigor);
 }
 
 void UEtheriAttributeSet::OnRep_Intelligence(const FGameplayAttributeData& OldIntelligence) const
@@ -145,6 +151,11 @@ void UEtheriAttributeSet::OnRep_Intelligence(const FGameplayAttributeData& OldIn
 void UEtheriAttributeSet::OnRep_Resilience(const FGameplayAttributeData& OldResilience) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, Resilience, OldResilience);
+}
+
+void UEtheriAttributeSet::OnRep_Vigor(const FGameplayAttributeData& OldVigor) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, Vigor, OldVigor);
 }
 
 void UEtheriAttributeSet::OnRep_Armour(const FGameplayAttributeData& OldArmour) const
@@ -177,29 +188,9 @@ void UEtheriAttributeSet::OnRep_CriticalHitResistance(const FGameplayAttributeDa
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, CriticalHitResistance, OldCriticalHitResistance);
 }
 
-void UEtheriAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, Health, OldHealth);
-}
-
-void UEtheriAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, MaxHealth, OldMaxHealth);
-}
-
 void UEtheriAttributeSet::OnRep_HealthRegen(const FGameplayAttributeData& OldHealthRegen) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, HealthRegen, OldHealthRegen);
-}
-
-void UEtheriAttributeSet::OnRep_Mana(const FGameplayAttributeData& OldMana) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, Mana, OldMana);
-}
-
-void UEtheriAttributeSet::OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, MaxMana, OldMaxMana);
 }
 
 void UEtheriAttributeSet::OnRep_ManaRegen(const FGameplayAttributeData& OldManaRegen) const
@@ -207,4 +198,12 @@ void UEtheriAttributeSet::OnRep_ManaRegen(const FGameplayAttributeData& OldManaR
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, ManaRegen, OldManaRegen);
 }
 
+void UEtheriAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, MaxHealth, OldMaxHealth);
+}
 
+void UEtheriAttributeSet::OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UEtheriAttributeSet, MaxMana, OldMaxMana);
+}

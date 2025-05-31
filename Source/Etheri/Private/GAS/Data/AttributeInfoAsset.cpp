@@ -5,7 +5,7 @@
 
 FEtheriAttributeInfo UAttributeInfoAsset::FindAttributeInfoForTag(const FGameplayTag& AttributeTag, bool bLogNotFound) const
 {
-	for (const FEtheriAttributeInfo& Info : AttributeInfo)
+	for (const FEtheriAttributeInfo& Info : AttributeInformation)
 	{
 		if (Info.AttributeTag.MatchesTagExact(AttributeTag))
 		{
@@ -15,7 +15,7 @@ FEtheriAttributeInfo UAttributeInfoAsset::FindAttributeInfoForTag(const FGamepla
 
 	if (bLogNotFound)
 	{
-		UE_LOG(LogTemp, Error, TEXT("Cant find Info for AttributeTag [%s] on AttributeInfo [%s]."), *AttributeTag.ToString(), *GetNameSafe(this));
+		UE_LOG(LogTemp, Error, TEXT("Can't find Info for AttributeTag [%s] on AttributeInfo [%s]."), *AttributeTag.ToString(), *GetNameSafe(this));
 	}
 
 	return FEtheriAttributeInfo();

@@ -11,7 +11,6 @@ USTRUCT(BlueprintType)
 struct FEtheriAttributeInfo
 {
 	GENERATED_BODY()
-public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FGameplayTag AttributeTag = FGameplayTag();
@@ -23,20 +22,19 @@ public:
 	FText AttributeDescription = FText();
 
 	UPROPERTY(BlueprintReadOnly)
-	float AttributeValue = 0;
+	float AttributeValue = 0.f;
 };
+
 /**
- * 
+ *
  */
 UCLASS()
 class ETHERI_API UAttributeInfoAsset : public UDataAsset
 {
 	GENERATED_BODY()
-	
 public:
-
 	FEtheriAttributeInfo FindAttributeInfoForTag(const FGameplayTag& AttributeTag, bool bLogNotFound = false) const;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TArray<FEtheriAttributeInfo> AttributeInfo;
+	TArray<FEtheriAttributeInfo> AttributeInformation;
 };

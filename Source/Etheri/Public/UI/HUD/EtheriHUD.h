@@ -6,50 +6,46 @@
 #include "GameFramework/HUD.h"
 #include "EtheriHUD.generated.h"
 
-class UEtheriUserWidget;
-class UOverlayWidgetController;
 class UAttributeMenuWidgetController;
-class UAbilitySystemComponent;
 class UAttributeSet;
+class UAbilitySystemComponent;
+class UOverlayWidgetController;
+class UEtheriUserWidget;
 struct FWidgetControllerParams;
 /**
- * 
+ *
  */
 UCLASS()
 class ETHERI_API AEtheriHUD : public AHUD
 {
 	GENERATED_BODY()
-	
 public:
 
+	UOverlayWidgetController* GetOverlayWidgetController(const FWidgetControllerParams& WCParams);
+	UAttributeMenuWidgetController* GetAttributeMenuWidgetController(const FWidgetControllerParams& WCParams);
 
-	void InitOverlay(APlayerController* PController, APlayerState* PState, UAbilitySystemComponent* ASComponent, UAttributeSet* ASet);
+	void InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS);
 
-	
 protected:
-	
+
+
 private:
-	//Overlay Widget Properties
+
 	UPROPERTY()
-	TObjectPtr<UEtheriUserWidget> OverlayWidget;
+	TObjectPtr<UEtheriUserWidget>  OverlayWidget;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UEtheriUserWidget> OverlayWidgetClass;
 
 	UPROPERTY()
 	TObjectPtr<UOverlayWidgetController> OverlayWidgetController;
+
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UOverlayWidgetController> OverlayWidgetControllerClass;
 
-	//Attribute Menu Widget Properties
-
 	UPROPERTY()
-	TObjectPtr<UAttributeMenuWidgetController> AttributeMenuController;
+	TObjectPtr<UAttributeMenuWidgetController> AttributeMenuWidgetController;
 
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<UAttributeMenuWidgetController> AttributeMenuControllerClass;
-public:
-	UOverlayWidgetController* GetOverlayWidgetController(const FWidgetControllerParams& WidgetControllerParams);
-
-	UAttributeMenuWidgetController* GetAttributeMenuWidgetController(const FWidgetControllerParams& WidgetControllerParams);
+	TSubclassOf<UAttributeMenuWidgetController> AttributeMenuWidgetControllerClass;
 };

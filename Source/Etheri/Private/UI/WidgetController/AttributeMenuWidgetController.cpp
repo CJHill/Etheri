@@ -1,23 +1,11 @@
 // Copyright. Hillz Studios
 
 
+
 #include "UI/WidgetController/AttributeMenuWidgetController.h"
+
 #include "GAS/EtheriAttributeSet.h"
 #include "GAS/Data/AttributeInfoAsset.h"
-#include "Tag/EtheriGameplayTags.h"
-
-
-void UAttributeMenuWidgetController::BroadcastInitialValues()
-{
-	UEtheriAttributeSet* AS = Cast<UEtheriAttributeSet>(AttributeSet);
-
-
-	check(AttributeInfo);
-	for (auto& Pair : AS->TagsToAttributes)
-	{
-		BroadcastAttributeInfo(Pair.Key, Pair.Value());
-	}
-}
 
 void UAttributeMenuWidgetController::BindCallbacksToDependencies()
 {
@@ -32,6 +20,18 @@ void UAttributeMenuWidgetController::BindCallbacksToDependencies()
 			}
 		);
 	}
+}
+
+void UAttributeMenuWidgetController::BroadcastInitialValues()
+{
+	UEtheriAttributeSet* AS = CastChecked<UEtheriAttributeSet>(AttributeSet);
+	check(AttributeInfo);
+
+	for (auto& Pair : AS->TagsToAttributes)
+	{
+		BroadcastAttributeInfo(Pair.Key, Pair.Value());
+	}
+
 }
 
 void UAttributeMenuWidgetController::BroadcastAttributeInfo(const FGameplayTag& AttributeTag, const FGameplayAttribute& Attribute) const

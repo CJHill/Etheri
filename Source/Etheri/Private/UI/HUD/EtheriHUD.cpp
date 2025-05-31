@@ -1,52 +1,45 @@
-// Copyright. Hillz Studios
-
 
 #include "UI/HUD/EtheriHUD.h"
+
 #include "UI/Widget/EtheriUserWidget.h"
-#include "UI/WidgetController/OverlayWidgetController.h"
 #include "UI/WidgetController/AttributeMenuWidgetController.h"
+#include "UI/WidgetController/OverlayWidgetController.h"
 
-void AEtheriHUD::InitOverlay(APlayerController* PController, APlayerState* PState, UAbilitySystemComponent* ASComponent, UAttributeSet* ASet)
-{
-	checkf(OverlayWidgetClass, TEXT("Overlay Widget Class uninitialised!, check HUD classes and BPs"));
-	checkf(OverlayWidgetControllerClass, TEXT("Overlay Widget Controller Class uninitialised!, check Widget Controller classes and BPs"))
-
-	UUserWidget* widgetOverlay = CreateWidget<UUserWidget>(GetWorld(), OverlayWidgetClass);
-
-	OverlayWidget = Cast<UEtheriUserWidget>(widgetOverlay);
-
-	FWidgetControllerParams widgetControllerParams(PController, PState, ASComponent, ASet);
-	UOverlayWidgetController* overlayWidgetController = GetOverlayWidgetController(widgetControllerParams);
-
-	OverlayWidget->SetWidgetController(overlayWidgetController);
-
-	overlayWidgetController->BroadcastInitialValues();
-	
-	widgetOverlay->AddToViewport();
-}
-
-
-
-UOverlayWidgetController* AEtheriHUD::GetOverlayWidgetController(const FWidgetControllerParams& WidgetControllerParams)
+UOverlayWidgetController* AEtheriHUD::GetOverlayWidgetController(const FWidgetControllerParams& WCParams)
 {
 	if (OverlayWidgetController == nullptr)
 	{
 		OverlayWidgetController = NewObject<UOverlayWidgetController>(this, OverlayWidgetControllerClass);
-		OverlayWidgetController->SetWidgetControllerParams(WidgetControllerParams);
+		OverlayWidgetController->SetWidgetControllerParams(WCParams);
 		OverlayWidgetController->BindCallbacksToDependencies();
-		
 	}
 	return OverlayWidgetController;
 }
 
-UAttributeMenuWidgetController* AEtheriHUD::GetAttributeMenuWidgetController(const FWidgetControllerParams& WidgetControllerParams)
+UAttributeMenuWidgetController* AEtheriHUD::GetAttributeMenuWidgetController(const FWidgetControllerParams& WCParams)
 {
-	if (AttributeMenuController == nullptr)
+	if (AttributeMenuWidgetController == nullptr)
 	{
-		AttributeMenuController = NewObject<UAttributeMenuWidgetController>(this, AttributeMenuControllerClass);
-		AttributeMenuController->SetWidgetControllerParams(WidgetControllerParams);
-		AttributeMenuController->BindCallbacksToDependencies();
-		
+		AttributeMenuWidgetController = NewObject<UAttributeMenuWidgetController>(this, AttributeMenuWidgetControllerClass);
+		AttributeMenuWidgetController->SetWidgetControllerParams(WCParams);
+		AttributeMenuWidgetController->BindCallbacksToDependencies();
 	}
-	return AttributeMenuController;
+	return AttributeMenuWidgetController;
 }
+
+void AEtheriHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS)
+{
+	checkf(OverlayWidgetClass, TEXT("Overlay Widget Class uninitialized, please fill out BP_EtheriHUD"));
+	checkf(OverlayWidgetControllerClass, TEXT("Overlay Widget Controller Class uninitialized, please fill out BP_EtheriHUD"));
+
+	UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), OverlayWidgetClass);
+	OverlayWidget = Cast<UEtheriUserWidget>(Widget);
+
+	const FWidgetControllerParams WidgetControllerParams(PC, PS, ASC, AS);
+	UOverlayWidgetController* WidgetController = GetOverlayWidgetController(WidgetControllerParams);
+
+	OverlayWidget->SetWidgetController(WidgetController);
+	WidgetController->BroadcastInitialValues();
+	Widget->AddToViewport();
+}
+

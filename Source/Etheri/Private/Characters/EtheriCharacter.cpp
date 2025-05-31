@@ -2,85 +2,64 @@
 
 
 #include "Characters/EtheriCharacter.h"
-#include "GameFramework/SpringArmComponent.h"
-#include "Camera/CameraComponent.h"
-#include "GameFramework/CharacterMovementComponent.h"
-#include "Player/EtheriPlayerState.h"
-#include "AbilitySystemComponent.h"
-#include "UI/HUD/EtheriHUD.h"
-#include "Player/EtheriPlayerController.h"
-#include "GAS/EtheriAbilitySystemComponent.h"
 
+#include "AbilitySystemComponent.h"
+#include "GAS/EtheriAbilitySystemComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Player/EtheriPlayerController.h"
+#include "Player/EtheriPlayerState.h"
+#include "UI/HUD/EtheriHUD.h"
 
 AEtheriCharacter::AEtheriCharacter()
 {
-	EtheriSpringArm = CreateDefaultSubobject<USpringArmComponent>("Player SpringArm");
-	EtheriSpringArm->SetupAttachment(GetMesh());
-	EtheriSpringArm->TargetArmLength = 800.f;
-	EtheriSpringArm->bUsePawnControlRotation = false;
-	EtheriSpringArm->bInheritPitch = false;
-	EtheriSpringArm->bInheritRoll = false;
-	EtheriSpringArm->bInheritYaw = false;
-
-	EtheriCamera = CreateDefaultSubobject<UCameraComponent>("Player Camera");
-	EtheriCamera->SetupAttachment(EtheriSpringArm, USpringArmComponent::SocketName);
-	EtheriCamera->bUsePawnControlRotation = false;
-
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 400.f, 0.f);
 	GetCharacterMovement()->bConstrainToPlane = true;
 	GetCharacterMovement()->bSnapToPlaneAtStart = true;
 
 	bUseControllerRotationPitch = false;
-	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
-
-	
-	
+	bUseControllerRotationYaw = false;
 }
 
 void AEtheriCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
-	//Don't need authority check as possessed by is only called on the server
+
+	// Init ability actor info for the Server
 	InitAbilityActorInfo();
-	
 }
 
 void AEtheriCharacter::OnRep_PlayerState()
 {
+	Super::OnRep_PlayerState();
+
+	// Init ability actor info for the Client
 	InitAbilityActorInfo();
-}
-
-void AEtheriCharacter::InitAbilityActorInfo()
-{
-	AEtheriPlayerState* etheriPlayerState = GetPlayerState<AEtheriPlayerState>();
-	if (etheriPlayerState)
-	{
-		etheriPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(etheriPlayerState, this);
-		Cast<UEtheriAbilitySystemComponent>(etheriPlayerState->GetAbilitySystemComponent())->AbilityActorInfoSet();
-		AbilitySystemComponent = etheriPlayerState->GetAbilitySystemComponent();
-		AttributeSet = etheriPlayerState->GetAttributeSet();
-	}
-	InitialDefaultAttributes();
-
-	if (AEtheriPlayerController* etheriPlayerController = Cast<AEtheriPlayerController>(GetController()))
-	{
-		if (AEtheriHUD* etheriHUD = Cast<AEtheriHUD>(etheriPlayerController->GetHUD()))
-		{
-			etheriHUD->InitOverlay(etheriPlayerController, etheriPlayerState, AbilitySystemComponent, AttributeSet);
-		}
-	}
-	
-	
 }
 
 int32 AEtheriCharacter::GetLevel()
 {
-	const AEtheriPlayerState* etheriPlayerState = GetPlayerState<AEtheriPlayerState>();
-	check(etheriPlayerState)
-	
-	return etheriPlayerState->GetPlayerLevel();
-	
-	
+	const AEtheriPlayerState* EtheriPlayerState = GetPlayerState<AEtheriPlayerState>();
+	check(EtheriPlayerState);
+	return EtheriPlayerState->GetPlayerLevel();
+}
+
+void AEtheriCharacter::InitAbilityActorInfo()
+{
+	AEtheriPlayerState* EtheriPlayerState = GetPlayerState<AEtheriPlayerState>();
+	check(EtheriPlayerState);
+	EtheriPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(EtheriPlayerState, this);
+	Cast<UEtheriAbilitySystemComponent>(EtheriPlayerState->GetAbilitySystemComponent())->AbilityActorInfoSet();
+	AbilitySystemComponent = EtheriPlayerState->GetAbilitySystemComponent();
+	AttributeSet = EtheriPlayerState->GetAttributeSet();
+
+	if (AEtheriPlayerController* EtheriPlayerController = Cast<AEtheriPlayerController>(GetController()))
+	{
+		if (AEtheriHUD* EtheriHUD = Cast<AEtheriHUD>(EtheriPlayerController->GetHUD()))
+		{
+			EtheriHUD->InitOverlay(EtheriPlayerController, EtheriPlayerState, AbilitySystemComponent, AttributeSet);
+		}
+	}
+	InitializeDefaultAttributes();
 }
