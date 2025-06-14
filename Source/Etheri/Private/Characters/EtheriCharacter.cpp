@@ -9,9 +9,24 @@
 #include "Player/EtheriPlayerController.h"
 #include "Player/EtheriPlayerState.h"
 #include "UI/HUD/EtheriHUD.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Camera/CameraComponent.h"
 
 AEtheriCharacter::AEtheriCharacter()
 {
+
+	EtheriSpringArm = CreateDefaultSubobject<USpringArmComponent>("Player SpringArm");
+	EtheriSpringArm->SetupAttachment(GetMesh());
+	EtheriSpringArm->TargetArmLength = 800.f;
+	EtheriSpringArm->bUsePawnControlRotation = false;
+	EtheriSpringArm->bInheritPitch = false;
+	EtheriSpringArm->bInheritRoll = false;
+	EtheriSpringArm->bInheritYaw = false;
+
+	EtheriCamera = CreateDefaultSubobject<UCameraComponent>("Player Camera");
+	EtheriCamera->SetupAttachment(EtheriSpringArm, USpringArmComponent::SocketName);
+	EtheriCamera->bUsePawnControlRotation = false;
+
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 400.f, 0.f);
 	GetCharacterMovement()->bConstrainToPlane = true;
@@ -28,6 +43,7 @@ void AEtheriCharacter::PossessedBy(AController* NewController)
 
 	// Init ability actor info for the Server
 	InitAbilityActorInfo();
+	AddCharacterAbilities();
 }
 
 void AEtheriCharacter::OnRep_PlayerState()

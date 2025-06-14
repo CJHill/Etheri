@@ -6,6 +6,8 @@
 #include "Characters/CharacterBase.h"
 #include "EtheriCharacter.generated.h"
 
+class USpringArmComponent;
+class UCameraComponent;
 /**
  *
  */
@@ -24,4 +26,10 @@ public:
 
 private:
 	virtual void InitAbilityActorInfo() override;
+
+	UPROPERTY(EditAnywhere, Category = "Display")
+	TObjectPtr<UCameraComponent> EtheriCamera;
+
+	UPROPERTY(EditAnywhere, Category = "Display")
+	TObjectPtr<USpringArmComponent> EtheriSpringArm;
 };

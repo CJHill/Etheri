@@ -20,6 +20,8 @@ public:
 	void AbilityActorInfoSet();
 
 	FEffectAssetTags EffectAssetTags;
+
+	void AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& CharacterAbilities);
 protected:
 	void EffectApplied(UAbilitySystemComponent* InASC, const FGameplayEffectSpec& InGESpec, FActiveGameplayEffectHandle InActiveGEHandle);
 

@@ -4,6 +4,7 @@
 
 #include "Characters/CharacterBase.h"
 #include "AbilitySystemComponent.h"
+#include "GAS/EtheriAbilitySystemComponent.h"
 
 ACharacterBase::ACharacterBase()
 {
@@ -44,6 +45,14 @@ void ACharacterBase::InitializeDefaultAttributes() const
 	ApplyEffectToSelf(DefaultPrimaryAttributes, 1.f);
 	ApplyEffectToSelf(DefaultSecondaryAttributes, 1.f);
 	ApplyEffectToSelf(DefaultVitalAttributes, 1.f);
+}
+
+void ACharacterBase::AddCharacterAbilities()
+{
+	if (!HasAuthority()) return;
+	UEtheriAbilitySystemComponent* etheriAbilitySystemComponent = CastChecked<UEtheriAbilitySystemComponent>(AbilitySystemComponent);
+
+	etheriAbilitySystemComponent->AddCharacterAbilities(DefaultAbilities);
 }
 
 
