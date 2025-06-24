@@ -29,4 +29,38 @@ void FEtheriGameplayTags::InitNativeGameplayTags()
 	//Vital Attributes
 	GameplayTags.Attributes_Vitals_Health = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Vitals.Health"), FString("Amount of hit points a player has before they die"));
 	GameplayTags.Attributes_Vitals_Mana = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Vitals.Mana"), FString("Resource used for casting spells"));
+
+	//Input Tags
+	GameplayTags.InputTag_TMB1 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.TMB1"),
+		FString("Input Tag for Thumb Mouse Button 1")
+	);
+
+	GameplayTags.InputTag_TMB2 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.TMB2"),
+		FString("Input Tag for Thumb Mouse Button 2")
+	);
+
+	GameplayTags.InputTag_1 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.1"),
+		FString("Input Tag for 1 key")
+	);
+
+
+	GameplayTags.InputTag_2 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.2"),
+		FString("Input Tag for 2 key")
+	);
+
+	GameplayTags.InputTag_3 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.3"),
+		FString("Input Tag for 3 key")
+	);
+
+	GameplayTags.InputTag_4 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.4"),
+		FString("Input Tag for 4 key")
+	);
+
+
 }

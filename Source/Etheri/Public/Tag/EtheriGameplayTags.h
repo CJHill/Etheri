@@ -36,6 +36,15 @@ public:
 	//Vitals Attributes
 	FGameplayTag Attributes_Vitals_Health;
 	FGameplayTag Attributes_Vitals_Mana;
+
+	//Input Tags
+	FGameplayTag InputTag_TMB1;
+	FGameplayTag InputTag_TMB2;
+	FGameplayTag InputTag_1;
+	FGameplayTag InputTag_2;
+	FGameplayTag InputTag_3;
+	FGameplayTag InputTag_4;
+
 protected:
 	
 private:
