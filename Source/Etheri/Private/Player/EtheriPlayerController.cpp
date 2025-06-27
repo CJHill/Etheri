@@ -3,7 +3,7 @@
 
 #include "Player/EtheriPlayerController.h"
 #include "EnhancedInputSubsystems.h"
-#include "EnhancedInputComponent.h"
+#include "Input/EtheriInputComponent.h"
 #include "Interface/EnemyInterface.h"
 
 AEtheriPlayerController::AEtheriPlayerController()
@@ -39,9 +39,11 @@ void AEtheriPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
-	UEnhancedInputComponent* enhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent);
+	UEtheriInputComponent* etheriInputComponent = CastChecked<UEtheriInputComponent>(InputComponent);
 
-	enhancedInputComponent->BindAction(EtheriMovement_IA, ETriggerEvent::Triggered, this, &AEtheriPlayerController::Move);
+	etheriInputComponent->BindAction(EtheriMovement_IA, ETriggerEvent::Triggered, this, &AEtheriPlayerController::Move);
+
+	etheriInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
 }
 
 void AEtheriPlayerController::Move(const FInputActionValue& InputActionValue)
@@ -83,4 +85,19 @@ void AEtheriPlayerController::CursorTrace()
 			ThisActor->HighlightActor();
 		}
 	}
+}
+
+void AEtheriPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
+{
+	GEngine->AddOnScreenDebugMessage(1, 3.f, FColor::Red, *InputTag.ToString());
+}
+
+void AEtheriPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
+{
+	GEngine->AddOnScreenDebugMessage(2, 3.f, FColor::Blue, *InputTag.ToString());
+}
+
+void AEtheriPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
+{
+	GEngine->AddOnScreenDebugMessage(3, 3.f, FColor::Green, *InputTag.ToString());
 }

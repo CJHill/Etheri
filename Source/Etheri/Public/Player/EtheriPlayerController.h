@@ -4,12 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "GameplayTagContainer.h"
 #include "EtheriPlayerController.generated.h"
 
 class UInputMappingContext; //Declaration so that this class can be wrapped in a TObjectPtr. Variables of this type will be marked as such VariableName_IMC
 class UInputAction; //Declaration so that this class can be wrapped in a TObjectPtr. Variables of this type will be marked as such VariableName_IA
 struct FInputActionValue;
 class IEnemyInterface;
+class UEtheriInputConfig;
 
 UCLASS()
 class ETHERI_API AEtheriPlayerController : public APlayerController
@@ -49,4 +51,11 @@ private:
 
 	TScriptInterface<IEnemyInterface> LastActor;
 	TScriptInterface<IEnemyInterface> ThisActor;
+
+	void AbilityInputTagPressed(FGameplayTag InputTag);
+	void AbilityInputTagReleased(FGameplayTag InputTag);
+	void AbilityInputTagHeld(FGameplayTag InputTag);
+
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	TObjectPtr<UEtheriInputConfig> InputConfig;
 };
