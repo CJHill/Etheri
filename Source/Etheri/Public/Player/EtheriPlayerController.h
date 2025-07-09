@@ -12,6 +12,8 @@ class UInputAction; //Declaration so that this class can be wrapped in a TObject
 struct FInputActionValue;
 class IEnemyInterface;
 class UEtheriInputConfig;
+class UEtheriAbilitySystemComponent;
+class USplineComponent;
 
 UCLASS()
 class ETHERI_API AEtheriPlayerController : public APlayerController
@@ -58,4 +60,20 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	TObjectPtr<UEtheriInputConfig> InputConfig;
+
+	TObjectPtr<UEtheriAbilitySystemComponent> AbilitySystemComponent;
+
+	UEtheriAbilitySystemComponent* GetASC();
+
+	FVector CachedDestination = FVector::ZeroVector;
+	float FollowTime = 0.f;
+	float ShortPressThreshold = 0.5f;
+	bool bAutoRunning = false;
+	bool bTargeting = false;
+
+	UPROPERTY(EditDefaultsOnly)
+	float AutoRunAcceptanceRadius = 50.f;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USplineComponent> Spline;
 };

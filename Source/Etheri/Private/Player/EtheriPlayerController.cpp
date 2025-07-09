@@ -5,10 +5,17 @@
 #include "EnhancedInputSubsystems.h"
 #include "Input/EtheriInputComponent.h"
 #include "Interface/EnemyInterface.h"
+#include "AbilitySystemBlueprintLibrary.h"
+#include "GAS/EtheriAbilitySystemComponent.h"
+#include "Components/SplineComponent.h"
+#include "Tag/EtheriGameplayTags.h"
+#include "NavigationSystem.h"
+#include "NavigationPath.h"
 
 AEtheriPlayerController::AEtheriPlayerController()
 {
 	bReplicates = true;
+	Spline = CreateDefaultSubobject<USplineComponent>("Spline");
 }
 
 void AEtheriPlayerController::Tick(float DeltaTime)
@@ -89,15 +96,93 @@ void AEtheriPlayerController::CursorTrace()
 
 void AEtheriPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 {
-	GEngine->AddOnScreenDebugMessage(1, 3.f, FColor::Red, *InputTag.ToString());
+	if (InputTag.MatchesTagExact(FEtheriGameplayTags::Get().InputTag_LMB))
+	{
+		bTargeting = ThisActor ? true : false;
+		bAutoRunning = false;
+	}
+
 }
 
 void AEtheriPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
-	GEngine->AddOnScreenDebugMessage(2, 3.f, FColor::Blue, *InputTag.ToString());
+
+	if (!InputTag.MatchesTagExact(FEtheriGameplayTags::Get().InputTag_LMB))
+	{
+		if (GetASC())
+		{
+			GetASC()->AbilityInputTagReleased(InputTag);
+		}
+		return;
+	}
+	if (bTargeting)
+	{
+		if (GetASC())
+		{
+			GetASC()->AbilityInputTagReleased(InputTag);
+		}
+	}
+	else
+	{
+		APawn* controlledPawn = GetPawn();
+		if (FollowTime <= ShortPressThreshold)
+		{
+			if (UNavigationPath* navPath = UNavigationSystemV1::FindPathToLocationSynchronously(this, controlledPawn->GetActorLocation(), CachedDestination))
+			{
+				Spline->ClearSplinePoints();
+				for (const FVector& PointLocation : navPath->PathPoints)
+				{
+					Spline->AddSplinePoint(PointLocation, ESplineCoordinateSpace::World);
+					DrawDebugSphere(GetWorld(), PointLocation, 8.f, 8.f, FColor::Green, false, 5.f);
+				}
+				bAutoRunning = true;
+			}
+		}
+		FollowTime = 0.f;
+		bTargeting = false;
+	}
 }
 
 void AEtheriPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
-	GEngine->AddOnScreenDebugMessage(3, 3.f, FColor::Green, *InputTag.ToString());
+	
+	if (!InputTag.MatchesTagExact(FEtheriGameplayTags::Get().InputTag_LMB))
+	{
+		if (GetASC())
+		{
+			GetASC()->AbilityInputTagHeld(InputTag);
+		}
+		return;
+	}
+	if (bTargeting)
+	{
+		if (GetASC())
+		{
+			GetASC()->AbilityInputTagHeld(InputTag);
+		}
+	}
+	else
+	{
+		FollowTime += GetWorld()->GetDeltaSeconds();
+		FHitResult hit;
+		if (GetHitResultUnderCursor(ECC_Visibility, false, hit))
+		{
+			CachedDestination = hit.ImpactPoint;
+
+		}
+		if (APawn* controlledPawn = GetPawn())
+		{
+			const FVector worldDirection = (CachedDestination - controlledPawn->GetActorLocation()).GetSafeNormal();
+			controlledPawn->AddMovementInput(worldDirection);
+		}
+	}
+}
+
+UEtheriAbilitySystemComponent* AEtheriPlayerController::GetASC()
+{
+	if (AbilitySystemComponent == nullptr)
+	{
+		AbilitySystemComponent = Cast<UEtheriAbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn<APawn>()));
+	}
+	return AbilitySystemComponent;
 }

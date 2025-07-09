@@ -62,5 +62,9 @@ void FEtheriGameplayTags::InitNativeGameplayTags()
 		FString("Input Tag for 4 key")
 	);
 
+	GameplayTags.InputTag_LMB = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.LMB"),
+		FString("Input Tag for left mouse button")
+	);
 
 }

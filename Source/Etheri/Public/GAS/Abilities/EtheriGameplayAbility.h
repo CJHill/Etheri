@@ -13,5 +13,8 @@ UCLASS()
 class ETHERI_API UEtheriGameplayAbility : public UGameplayAbility
 {
 	GENERATED_BODY()
-	
+public:
+
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	FGameplayTag DefaultInputTag;
 };

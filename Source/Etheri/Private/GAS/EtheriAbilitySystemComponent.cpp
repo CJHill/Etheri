@@ -3,6 +3,7 @@
 
 #include "GAS/EtheriAbilitySystemComponent.h"
 #include "Tag/EtheriGameplayTags.h"
+#include "GAS/Abilities/EtheriGameplayAbility.h"
 
 void UEtheriAbilitySystemComponent::AbilityActorInfoSet()
 {
@@ -13,11 +14,46 @@ void UEtheriAbilitySystemComponent::AbilityActorInfoSet()
 
 void UEtheriAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& CharacterAbilities)
 {
-	for (TSubclassOf<UGameplayAbility> AbilityClass : CharacterAbilities)
+	for (const TSubclassOf<UGameplayAbility> AbilityClass : CharacterAbilities)
 	{
 		FGameplayAbilitySpec abilitySpec = FGameplayAbilitySpec(AbilityClass, 1);
-		//GiveAbility(abilitySpec);
-		GiveAbilityAndActivateOnce(abilitySpec);
+
+		if (const UEtheriGameplayAbility* etheriAbility = Cast<UEtheriGameplayAbility>(abilitySpec.Ability))
+		{
+			abilitySpec.DynamicAbilityTags.AddTag(etheriAbility->DefaultInputTag);
+			GiveAbility(abilitySpec);
+		}
+		
+	}
+}
+
+void UEtheriAbilitySystemComponent::AbilityInputTagHeld(const FGameplayTag& InputTag)
+{
+	if (!InputTag.IsValid()) return;
+
+	for (FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
+	{
+		if (AbilitySpec.DynamicAbilityTags.HasTagExact(InputTag))
+		{
+			AbilitySpecInputPressed(AbilitySpec);
+			if (!AbilitySpec.IsActive())
+			{
+				TryActivateAbility(AbilitySpec.Handle);
+			}
+		}
+	}
+}
+
+void UEtheriAbilitySystemComponent::AbilityInputTagReleased(const FGameplayTag& InputTag)
+{
+	if (!InputTag.IsValid()) return;
+
+	for (FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
+	{
+		if (AbilitySpec.DynamicAbilityTags.HasTagExact(InputTag))
+		{
+			AbilitySpecInputReleased(AbilitySpec);
+		}
 	}
 }
 
