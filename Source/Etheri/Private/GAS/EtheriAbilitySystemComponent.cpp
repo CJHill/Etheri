@@ -7,7 +7,7 @@
 
 void UEtheriAbilitySystemComponent::AbilityActorInfoSet()
 {
-	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UEtheriAbilitySystemComponent::EffectApplied);
+	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UEtheriAbilitySystemComponent::ClientEffectApplied);
 	const FEtheriGameplayTags& GameplayTags = FEtheriGameplayTags::Get();
 	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Orange, FString::Printf(TEXT("Tag: %s"), *GameplayTags.Attributes_Secondary_Armour.ToString()));
 }
@@ -57,7 +57,7 @@ void UEtheriAbilitySystemComponent::AbilityInputTagReleased(const FGameplayTag& 
 	}
 }
 
-void UEtheriAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* InASC, const FGameplayEffectSpec& InGESpec, FActiveGameplayEffectHandle InActiveGEHandle)
+void UEtheriAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySystemComponent* InASC, const FGameplayEffectSpec& InGESpec, FActiveGameplayEffectHandle InActiveGEHandle)
 {
 	FGameplayTagContainer gameplayTagContainer;
 	InGESpec.GetAllAssetTags(gameplayTagContainer);

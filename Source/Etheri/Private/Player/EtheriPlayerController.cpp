@@ -22,7 +22,25 @@ void AEtheriPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	CursorTrace();
+	AutoRun();
 }
+void AEtheriPlayerController::AutoRun()
+{
+	if (!bAutoRunning) return;
+	if (APawn* controlledPawn = GetPawn())
+	{
+		const FVector locationOnSpline = Spline->FindLocationClosestToWorldLocation(controlledPawn->GetActorLocation(), ESplineCoordinateSpace::World);
+		const FVector directionOnSpline = Spline->FindDirectionClosestToWorldLocation(locationOnSpline, ESplineCoordinateSpace::World);
+		controlledPawn->AddMovementInput(directionOnSpline);
+
+		const float distanceToDestination = (locationOnSpline - CachedDestination).Length();
+		if (distanceToDestination <= AutoRunAcceptanceRadius)
+		{
+			bAutoRunning = false;
+		}
+	}
+}
+
 
 void AEtheriPlayerController::BeginPlay()
 {
@@ -74,12 +92,12 @@ void AEtheriPlayerController::Move(const FInputActionValue& InputActionValue)
 
 void AEtheriPlayerController::CursorTrace()
 {
-	FHitResult cursorHit;
-	GetHitResultUnderCursor(ECC_Visibility, false, cursorHit);
-	if (!cursorHit.bBlockingHit) return;
+	
+	GetHitResultUnderCursor(ECC_Visibility, false, CursorHit);
+	if (!CursorHit.bBlockingHit) return;
 
 	LastActor = ThisActor;
-	ThisActor = cursorHit.GetActor();
+	ThisActor = CursorHit.GetActor();
 	if (ThisActor != LastActor)
 	{
 		if (LastActor != nullptr)
@@ -124,7 +142,7 @@ void AEtheriPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 	}
 	else
 	{
-		APawn* controlledPawn = GetPawn();
+		const APawn* controlledPawn = GetPawn();
 		if (FollowTime <= ShortPressThreshold)
 		{
 			if (UNavigationPath* navPath = UNavigationSystemV1::FindPathToLocationSynchronously(this, controlledPawn->GetActorLocation(), CachedDestination))
@@ -133,9 +151,13 @@ void AEtheriPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 				for (const FVector& PointLocation : navPath->PathPoints)
 				{
 					Spline->AddSplinePoint(PointLocation, ESplineCoordinateSpace::World);
-					DrawDebugSphere(GetWorld(), PointLocation, 8.f, 8.f, FColor::Green, false, 5.f);
 				}
-				bAutoRunning = true;
+				if (navPath->PathPoints.Num() > 0)
+				{
+					CachedDestination = navPath->PathPoints[navPath->PathPoints.Num() - 1];
+					bAutoRunning = true;
+				}
+				
 			}
 		}
 		FollowTime = 0.f;
@@ -164,10 +186,10 @@ void AEtheriPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 	else
 	{
 		FollowTime += GetWorld()->GetDeltaSeconds();
-		FHitResult hit;
-		if (GetHitResultUnderCursor(ECC_Visibility, false, hit))
+		
+		if (CursorHit.bBlockingHit)
 		{
-			CachedDestination = hit.ImpactPoint;
+			CachedDestination = CursorHit.ImpactPoint;
 
 		}
 		if (APawn* controlledPawn = GetPawn())
@@ -186,3 +208,4 @@ UEtheriAbilitySystemComponent* AEtheriPlayerController::GetASC()
 	}
 	return AbilitySystemComponent;
 }
+
