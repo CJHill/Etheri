@@ -10,6 +10,7 @@ AEtheriProjectile::AEtheriProjectile()
 {
  	
 	PrimaryActorTick.bCanEverTick = false;
+	bReplicates = true;
 
 	ProjectileSphere = CreateDefaultSubobject<USphereComponent>("Projectile Sphere");
 	SetRootComponent(ProjectileSphere);
