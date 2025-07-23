@@ -10,7 +10,12 @@ void UEtheriProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Ha
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 
-	const bool bIsServer = HasAuthority(&ActivationInfo);
+	
+}
+
+void UEtheriProjectileSpell::SpawnProjectile()
+{
+	const bool bIsServer = GetAvatarActorFromActorInfo()->HasAuthority();
 
 	if (!bIsServer) return;
 
@@ -34,5 +39,5 @@ void UEtheriProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Ha
 
 		projectileToSpawn->FinishSpawning(spawnTransform);
 	}
-	
+
 }
