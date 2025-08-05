@@ -6,7 +6,7 @@
 #include "Abilities/Tasks/AbilityTask.h"
 #include "TargetDataUnderMouse.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMouseTargetDataSignature, const FVector&, Data);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMouseTargetDataSignature, const FGameplayAbilityTargetDataHandle&, DataHandle);
 /**
  * Target Data Under Mouse refers to information about the hit result, which is where the player clicks on the map with their mouse cursor
  */
@@ -25,4 +25,6 @@ public:
 private:
 	//Don't need to call super as that version just calls a UE log
 	virtual void Activate() override;
+
+	void SendMouseCursorData();
 };
