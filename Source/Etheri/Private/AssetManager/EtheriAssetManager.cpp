@@ -3,6 +3,7 @@
 
 #include "AssetManager/EtheriAssetManager.h"
 #include "Tag/EtheriGameplayTags.h"
+#include "AbilitySystemGlobals.h"
 
 UEtheriAssetManager& UEtheriAssetManager::Get()
 {
@@ -18,4 +19,5 @@ void UEtheriAssetManager::StartInitialLoading()
 	Super::StartInitialLoading();
 
 	FEtheriGameplayTags::InitNativeGameplayTags();
+	UAbilitySystemGlobals::Get().InitGlobalData(); // This is required to use target data.
 }
