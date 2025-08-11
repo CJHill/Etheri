@@ -67,6 +67,8 @@ void AEtheriPlayerController::SetupInputComponent()
 	UEtheriInputComponent* etheriInputComponent = CastChecked<UEtheriInputComponent>(InputComponent);
 
 	etheriInputComponent->BindAction(EtheriMovement_IA, ETriggerEvent::Triggered, this, &AEtheriPlayerController::Move);
+	etheriInputComponent->BindAction(EtheriShift_IA, ETriggerEvent::Started, this, &AEtheriPlayerController::ShiftPressed);
+	etheriInputComponent->BindAction(EtheriShift_IA, ETriggerEvent::Completed, this, &AEtheriPlayerController::ShiftReleased);
 
 	etheriInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
 }
@@ -133,14 +135,13 @@ void AEtheriPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 		}
 		return;
 	}
-	if (bTargeting)
+
+	if (GetASC())
 	{
-		if (GetASC())
-		{
-			GetASC()->AbilityInputTagReleased(InputTag);
-		}
+		GetASC()->AbilityInputTagReleased(InputTag);
 	}
-	else
+
+	if (!bTargeting && !bIsShiftKeyPressed)
 	{
 		const APawn* controlledPawn = GetPawn();
 		if (FollowTime <= ShortPressThreshold)
@@ -157,12 +158,13 @@ void AEtheriPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 					CachedDestination = navPath->PathPoints[navPath->PathPoints.Num() - 1];
 					bAutoRunning = true;
 				}
-				
+
 			}
 		}
 		FollowTime = 0.f;
 		bTargeting = false;
 	}
+	
 }
 
 void AEtheriPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
@@ -176,7 +178,7 @@ void AEtheriPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 		}
 		return;
 	}
-	if (bTargeting)
+	if (bTargeting || bIsShiftKeyPressed)
 	{
 		if (GetASC())
 		{

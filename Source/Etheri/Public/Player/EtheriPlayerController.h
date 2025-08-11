@@ -33,7 +33,13 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputAction> EtheriMovement_IA;
 
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UInputAction> EtheriShift_IA;
+
 	void Move(const FInputActionValue& InputActionValue);
+	void ShiftPressed() { bIsShiftKeyPressed = true; };
+	void ShiftReleased() { bIsShiftKeyPressed = false; };
+	bool bIsShiftKeyPressed = false;
 
 	/**Cursor Trace:
 	 * Line trace from cursor. There are several conditions:

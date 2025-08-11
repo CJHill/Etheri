@@ -13,7 +13,7 @@ void UEtheriProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Ha
 	
 }
 
-void UEtheriProjectileSpell::SpawnProjectile()
+void UEtheriProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocation)
 {
 	const bool bIsServer = GetAvatarActorFromActorInfo()->HasAuthority();
 
@@ -23,10 +23,12 @@ void UEtheriProjectileSpell::SpawnProjectile()
 	if (combatInterface)
 	{
 		const FVector socketLocation = combatInterface->GetWeaponSocketLocation();
+		FRotator projectileRotation = (ProjectileTargetLocation - socketLocation).Rotation();
+		projectileRotation.Pitch = 0.f;
 
 		FTransform spawnTransform;
 		spawnTransform.SetLocation(socketLocation);
-		//TO DO: Set Projectile Rotation
+		spawnTransform.SetRotation(projectileRotation.Quaternion());
 
 		AEtheriProjectile* projectileToSpawn = GetWorld()->SpawnActorDeferred<AEtheriProjectile>(
 			ProjectileClass,

@@ -5,6 +5,7 @@
 #include "Characters/CharacterBase.h"
 #include "AbilitySystemComponent.h"
 #include "GAS/EtheriAbilitySystemComponent.h"
+#include "Components/CapsuleComponent.h"
 
 ACharacterBase::ACharacterBase()
 {
@@ -13,6 +14,8 @@ ACharacterBase::ACharacterBase()
 	WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
 	WeaponMesh->SetupAttachment(GetMesh(), FName("WeaponHandSocket"));
 	WeaponMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+	GetMesh()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 }
 
 UAbilitySystemComponent* ACharacterBase::GetAbilitySystemComponent() const
